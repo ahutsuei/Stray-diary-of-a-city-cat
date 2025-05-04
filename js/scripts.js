@@ -1,16 +1,20 @@
 const nameInput = document.getElementById('name-input');
-const submitCheck = document.getElementById('submit-check');
+const checkBtn = document.getElementById('check-btn');
 
 nameInput.addEventListener('input', () => {
   if (nameInput.value.trim() !== '') {
-    submitCheck.disabled = false;
+    checkBtn.classList.add('enabled');
+    checkBtn.disabled = false;
+    checkBtn.style.cursor = 'pointer';
   } else {
-    submitCheck.disabled = true;
+    checkBtn.classList.remove('enabled');
+    checkBtn.disabled = true;
+    checkBtn.style.cursor = 'not-allowed';
   }
 });
 
-submitCheck.addEventListener('click', () => {
-  if (!submitCheck.disabled) {
+checkBtn.addEventListener('click', () => {
+  if (!checkBtn.disabled) {
     window.location.href = 'element.html';
   }
 });
