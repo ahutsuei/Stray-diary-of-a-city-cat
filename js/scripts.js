@@ -13,5 +13,11 @@ nameInput.addEventListener('input', function () {
 
 // 當按下確認按鈕
 submitCheck.addEventListener('click', function () {
-  alert("名字已提交：" + nameInput.value);
+  if (nameInput.value.trim() !== "") {
+    // 提交名字並跳轉到element.html
+    alert("名字已提交：" + nameInput.value);
+    window.location.href = "element.html"; // 跳轉到 element.html
+  } else {
+    alert("請輸入名字！");
+  }
 });
