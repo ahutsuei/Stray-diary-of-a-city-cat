@@ -2,31 +2,35 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=390, initial-scale=1.0" />
-  <title>城市貓動畫</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>城市貓の流浪日記</title>
   <link href="https://fonts.googleapis.com/css2?family=Zen+Antique&display=swap" rel="stylesheet" />
   <style>
     * {
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
       font-family: 'Zen Antique', sans-serif;
     }
+
     body {
       background: #2C2C2C;
-      width: 390px;
-      height: 844px;
+      width: 100vw;
+      height: 100vh;
       overflow: hidden;
-      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
     }
-    
+
     .text {
-      position: absolute;
-      left: 119px;
-      top: 806px;
+      margin-bottom: 20px;
       text-align: center;
       color: #FFFEFE;
       font-size: 12px;
       letter-spacing: 5px;
+      animation: fadeIn 1s ease-in-out;
     }
 
     @keyframes fadeIn {
@@ -40,7 +44,6 @@
 
   <script>
     function goNext() {
-      // 可修改為你最終想去的頁面，例如 story.html
       window.location.href = 'test1.html';
     }
   </script>
