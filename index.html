@@ -4,101 +4,55 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=390, initial-scale=1.0" />
   <title>城市貓の流浪日記</title>
-  <link href="https://fonts.googleapis.com/css2?family=Zen+Antique&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Zen+Antique&display=swap" rel="stylesheet" />
   <style>
-    body {
+    * {
       margin: 0;
       padding: 0;
-      background: #2C2C2C;
       font-family: 'Zen Antique', sans-serif;
     }
-
-    .container {
-      width: 390px;
-      height: 844px;
-      margin: 0 auto;
-      position: relative;
-      overflow: hidden;
-      border: 1px solid #ccc;
-      background-color: #2C2C2C;
-    }
-
-    .title-main {
-      color: #E8E8E8;
-      font-size: 64px;
-      font-weight: 400;
-      position: absolute;
-      top: 76px;
-      left: 49px;
-    }
-
-    .title-sub-jp {
-      color: #E8E8E8;
-      font-size: 32px;
-      position: absolute;
-      top: 156px;
-      left: 49px;
-      text-align: center;
-    }
-
-    .title-sub {
-      color: #E8E8E8;
-      font-size: 64px;
-      position: absolute;
-      top: 182px;
-      left: 49px;
-      text-align: right;
-    }
-
-    .input-box {
-      position: absolute;
-      bottom: 60px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      align-items: center;
-    }
-
-    #name-input {
-      width: 200px;
-      height: 40px;
+    input {
+      background: transparent;
       border: none;
-      border-radius: 20px;
-      padding: 0 16px;
+      outline: none;
       font-size: 14px;
-      font-family: 'Zen Antique', sans-serif;
+      text-align: center;
+      width: 178px;
+      height: 40px;
     }
-
-    #submit-check {
+    #check-btn {
+      position: absolute;
+      left: 272px;
+      top: 754px;
       width: 40px;
       height: 40px;
-      margin-left: 12px;
+      border-radius: 9999px;
+      background: #D9D9D9;
       border: none;
-      border-radius: 50%;
-      font-size: 20px;
+      font-size: 24px;
       cursor: not-allowed;
-      background-color: #D9D9D9;
-      color: black;
-      transition: opacity 0.3s ease;
       opacity: 0.5;
     }
-
-    #submit-check:enabled {
+    #check-btn.enabled {
       cursor: pointer;
       opacity: 1;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="title-main">城市猫</div>
-    <div class="title-sub-jp">の</div>
-    <div class="title-sub">流浪日記</div>
+  <div style="width: 390px; height: 844px; position: relative; background: white; overflow: hidden">
+    <div style="width: 390px; height: 844px; left: 0px; top: 0px; position: absolute; background: #2C2C2C"></div>
+    <div style="width: 292px; height: 93px; left: 49px; top: 76px; position: absolute; color: #E8E8E8; font-size: 64px; font-family: Zen Antique; font-weight: 400; word-wrap: break-word">城市猫</div>
+    <div style="width: 292px; height: 87px; left: 49px; top: 182px; position: absolute; text-align: right; color: #E8E8E8; font-size: 64px; font-family: Zen Antique; font-weight: 400; word-wrap: break-word">流浪日記</div>
+    <div style="width: 292px; height: 46px; left: 49px; top: 156px; position: absolute; text-align: center; color: #E8E8E8; font-size: 32px; font-family: Zen Antique; font-weight: 400; word-wrap: break-word">の</div>
+    
+    <!-- 名字輸入框背景 -->
+    <div style="width: 178px; height: 40px; left: 78px; top: 754px; position: absolute; background: #D9D9D9; border-radius: 40px"></div>
+    <!-- 實際的輸入框 -->
+    <input type="text" id="name-input" placeholder="請輸入名字" style="position: absolute; left: 78px; top: 754px;" />
 
-    <div class="input-box">
-      <input type="text" id="name-input" placeholder="請輸入名字" />
-      <button id="submit-check" disabled>✔</button>
-    </div>
+    <!-- 確認按鈕 -->
+    <button id="check-btn">✓</button>
   </div>
 
   <script src="script.js"></script>
