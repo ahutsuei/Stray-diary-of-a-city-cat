@@ -88,25 +88,25 @@
       font-weight: 400;
     }
 
-    .submit-circle {
-      width: 40px;
+    .submit-button {
+      width: 178px;
       height: 40px;
       position: absolute;
-      left: 272px;
-      top: 754px;
+      left: 78px;
+      top: 804px;
       background: #D9D9D9;
-      border-radius: 9999px;
+      border-radius: 40px;
+      cursor: pointer;
+      display: none; /* 隱藏直到輸入名字後顯示 */
     }
 
-    .submit-check {
-      width: 12px;
-      height: 21px;
+    .submit-text {
       position: absolute;
-      left: 286px;
-      top: 755px;
+      left: 40px;
+      top: 8px;
       text-align: center;
       color: black;
-      font-size: 24px;
+      font-size: 14px;
       font-weight: 400;
     }
 
@@ -134,8 +134,8 @@
       <input type="text" id="name-input" placeholder="請輸入名字" />
     </div>
 
-    <div class="submit-circle" id="submit-circle">
-      <div class="submit-check" id="submit-check" style="display: none;">✓</div>
+    <div class="submit-button" id="submit-button">
+      <div class="submit-text">確認</div>
     </div>
   </div>
 
