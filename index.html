@@ -68,7 +68,7 @@
       font-weight: 400;
     }
 
-    .input-box {
+    .name-box {
       width: 178px;
       height: 40px;
       position: absolute;
@@ -78,15 +78,14 @@
       border-radius: 40px;
     }
 
-    #name-input {
-      width: 100%;
-      height: 100%;
-      padding: 0 10px;
-      font-size: 14px;
+    .name-text {
+      position: absolute;
+      left: 132px;
+      top: 764px;
+      text-align: center;
       color: black;
-      border: none;
-      background: transparent;
-      border-radius: 40px;
+      font-size: 14px;
+      font-weight: 400;
     }
 
     .submit-circle {
@@ -109,7 +108,17 @@
       color: black;
       font-size: 24px;
       font-weight: 400;
-      display: none;
+    }
+
+    #name-input {
+      width: 100%;
+      height: 100%;
+      border: none;
+      background: transparent;
+      text-align: center;
+      font-size: 14px;
+      color: black;
+      outline: none;
     }
   </style>
 </head>
@@ -121,17 +130,15 @@
     <div class="title-sub-jp">の</div>
     <div class="title-sub">流浪日記</div>
 
-    <!-- 輸入框 -->
-    <div class="input-box">
+    <div class="name-box">
       <input type="text" id="name-input" placeholder="請輸入名字" />
     </div>
 
-    <div class="submit-circle">
-      <div class="submit-check" id="submit-check">✓</div>
+    <div class="submit-circle" id="submit-circle">
+      <div class="submit-check" id="submit-check" style="display: none;">✓</div>
     </div>
   </div>
 
-  <!-- 引入外部JS文件 -->
   <script src="script.js"></script>
 </body>
 </html>
