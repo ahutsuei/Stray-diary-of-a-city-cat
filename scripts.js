@@ -14,7 +14,6 @@ nameInput.addEventListener('input', () => {
 });
 
 checkBtn.addEventListener('click', () => {
-  if (!checkBtn.disabled) {
-    window.location.href = 'element.html';
-  }
+  alert('會跳轉到 element.html');
+  window.location.href = 'element.html';
 });
