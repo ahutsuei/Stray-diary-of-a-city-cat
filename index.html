@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <title>城市貓の流浪日記</title>
+    <!-- ✅ 添加 viewport 设置 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    
+    <link rel="stylesheet" href="globals.css" />
+    <link rel="stylesheet" href="style.css" />
+
+    <style>
+      /* ✅ 非手機裝置時遮罩整個畫面 */
+      @media screen and (min-width: 768px) {
+        body::before {
+          content: "請使用手機裝置開啟本頁面";
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100vw;
+          height: 100vh;
+          background: #000;
+          color: #fff;
+          font-size: 20px;
+          z-index: 9999;
+          text-align: center;
+          padding: 20px;
+        }
+
+        .screen {
+          display: none; /* 隱藏內容 */
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="screen">
+      <div class="overlap-wrapper">
+        <div class="overlap">
+          <div class="group">
+            <div class="overlap-group">
+              <div class="text-wrapper">城市貓</div>
+              <div class="div">流浪日記</div>
+              <div class="text-wrapper-2">の</div>
+            </div>
+          </div>
+          <div class="group-2">
+            <div class="overlap-2"><div class="text-wrapper-3">請輸入名字</div></div>
+            <div class="overlap-3">
+              <a href="element-screen.html"><div class="ellipse"></div></a>
+              <a href="element-screen.html"><div class="text-wrapper-4">✓</div></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
