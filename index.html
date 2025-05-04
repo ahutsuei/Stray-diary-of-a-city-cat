@@ -40,11 +40,12 @@
   </style>
 </head>
 <body>
-  <div style="width: 390px; height: 844px; position: relative; background: white; overflow: hidden">
+   <div style="width: 100vw; height: 100vh; position: relative; background: #2C2C2C; overflow: hidden;">
     <div style="width: 390px; height: 844px; left: 0px; top: 0px; position: absolute; background: #2C2C2C"></div>
     <div style="width: 292px; height: 93px; left: 49px; top: 76px; position: absolute; color: #E8E8E8; font-size: 64px; font-family: Zen Antique; font-weight: 400; word-wrap: break-word">城市猫</div>
     <div style="width: 292px; height: 87px; left: 49px; top: 182px; position: absolute; text-align: right; color: #E8E8E8; font-size: 64px; font-family: Zen Antique; font-weight: 400; word-wrap: break-word">流浪日記</div>
     <div style="width: 292px; height: 46px; left: 49px; top: 156px; position: absolute; text-align: center; color: #E8E8E8; font-size: 32px; font-family: Zen Antique; font-weight: 400; word-wrap: break-word">の</div>
+  
     
     <!-- 名字輸入框背景 -->
     <div style="width: 178px; height: 40px; left: 78px; top: 754px; position: absolute; background: #D9D9D9; border-radius: 40px"></div>
@@ -55,6 +56,32 @@
     <button id="check-btn">✓</button>
   </div>
 
-  <script src="script.js"></script>
+  <script>
+    const nameInput = document.getElementById('name-input');
+    const checkBtn = document.getElementById('check-btn');
+
+    // 初始設置：按鈕無效
+    checkBtn.disabled = true;
+
+    // 每當輸入變更時檢查內容
+    nameInput.addEventListener('input', () => {
+      // 若輸入框有任意字，就允許按鈕啟用
+      checkBtn.disabled = nameInput.value.trim() === '';
+    });
+
+    // 點擊 ✔ 按鈕後跳轉
+    checkBtn.addEventListener('click', () => {
+      if (!checkBtn.disabled) {
+        window.location.href = 'element.html'; // 替換為你需要的頁面
+      }
+    });
+
+    // 按下 Enter 鍵觸發跳轉
+    nameInput.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' && !checkBtn.disabled) {
+        window.location.href = 'element.html'; // 替換為你需要的頁面
+      }
+    });
+  </script>
 </body>
 </html>
