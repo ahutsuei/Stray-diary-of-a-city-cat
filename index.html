@@ -1,62 +1,121 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
-  <head>
-    <meta charset="utf-8" />
-    <title>城市貓の流浪日記</title>
-    <!-- ✅ 添加 viewport 设置 -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    
-    <link rel="stylesheet" href="globals.css" />
-    <link rel="stylesheet" href="style.css" />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>城市貓の流浪日記</title>
+  <link href="https://fonts.googleapis.com/css2?family=Zen+Antique&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: white;
+      font-family: 'Zen Antique', sans-serif;
+    }
 
-    <style>
-      /* ✅ 非手機裝置時遮罩整個畫面 */
-      @media screen and (min-width: 768px) {
-        body::before {
-          content: "請使用手機裝置開啟本頁面";
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 100vw;
-          height: 100vh;
-          background: #000;
-          color: #fff;
-          font-size: 20px;
-          z-index: 9999;
-          text-align: center;
-          padding: 20px;
-        }
+    .container {
+      width: 100%;
+      height: 100vh;
+      background: #2C2C2C;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      padding: 40px 20px;
+      box-sizing: border-box;
+    }
 
-        .screen {
-          display: none; /* 隱藏內容 */
-        }
+    .title-wrapper {
+      text-align: center;
+      color: #E8E8E8;
+    }
+
+    .title-main {
+      font-size: 48px;
+      margin: 0;
+    }
+
+    .title-sub-jp {
+      font-size: 24px;
+      margin: 4px 0;
+    }
+
+    .title-sub {
+      font-size: 48px;
+      margin: 0;
+    }
+
+    .input-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .name-box {
+      width: 180px;
+      height: 40px;
+      background: #D9D9D9;
+      border-radius: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .name-text {
+      font-size: 14px;
+      color: black;
+    }
+
+    .submit-circle {
+      width: 40px;
+      height: 40px;
+      background: #D9D9D9;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .submit-check {
+      font-size: 24px;
+      color: black;
+    }
+
+    @media screen and (min-width: 400px) {
+      .title-main,
+      .title-sub {
+        font-size: 64px;
       }
-    </style>
-  </head>
 
-  <body>
-    <div class="screen">
-      <div class="overlap-wrapper">
-        <div class="overlap">
-          <div class="group">
-            <div class="overlap-group">
-              <div class="text-wrapper">城市貓</div>
-              <div class="div">流浪日記</div>
-              <div class="text-wrapper-2">の</div>
-            </div>
-          </div>
-          <div class="group-2">
-            <div class="overlap-2"><div class="text-wrapper-3">請輸入名字</div></div>
-            <div class="overlap-3">
-              <a href="element-screen.html"><div class="ellipse"></div></a>
-              <a href="element-screen.html"><div class="text-wrapper-4">✓</div></a>
-            </div>
-          </div>
-        </div>
+      .title-sub-jp {
+        font-size: 32px;
+      }
+
+      .name-box {
+        width: 200px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="title-wrapper">
+      <h1 class="title-main">城市貓</h1>
+      <div class="title-sub-jp">の</div>
+      <h1 class="title-sub">流浪日記</h1>
+    </div>
+
+    <div class="input-wrapper">
+      <div class="name-box">
+        <span class="name-text">請輸入名字</span>
+      </div>
+      <div class="submit-circle">
+        <div class="submit-check">✓</div>
       </div>
     </div>
-  </body>
+  </div>
+</body>
 </html>
