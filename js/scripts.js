@@ -1,23 +1,33 @@
-// 取得需要操作的元素
-const submitButton = document.getElementById('submit-button');
+// 取得名字輸入框
 const nameInput = document.getElementById('name-input');
 
-// 當名字輸入框有變動時，檢查是否有輸入內容
-nameInput.addEventListener('input', function () {
-  if (nameInput.value.trim() !== "") {
-    submitButton.style.display = 'block'; // 顯示確認按鈕
-  } else {
-    submitButton.style.display = 'none'; // 隱藏確認按鈕
-  }
-});
+// 檢查是否已經建立按鈕（避免重複）
+let checkButton = null;
 
-// 當按下確認按鈕時
-submitButton.addEventListener('click', function () {
-  if (nameInput.value.trim() !== "") {
-    // 提交名字並跳轉到element.html
-    alert("名字已提交：" + nameInput.value);
-    window.location.href = "element.html"; // 跳轉到 element.html
-  } else {
-    alert("請輸入名字！");
+// 監聽輸入框內容變化
+nameInput.addEventListener('input', function () {
+  const hasText = nameInput.value.trim() !== "";
+
+  if (hasText && !checkButton) {
+    // 動態建立按鈕
+    checkButton = document.createElement('div');
+    checkButton.textContent = '✔';
+    checkButton.style.position = 'absolute';
+    checkButton.style.left = '270px';
+    checkButton.style.top = '760px';
+    checkButton.style.fontSize = '24px';
+    checkButton.style.color = '#333';
+    checkButton.style.cursor = 'pointer';
+    checkButton.style.userSelect = 'none';
+
+    checkButton.addEventListener('click', function () {
+      window.location.href = 'element.html';
+    });
+
+    document.querySelector('.container').appendChild(checkButton);
+  }
+
+  if (checkButton) {
+    checkButton.style.display = hasText ? 'block' : 'none';
   }
 });
