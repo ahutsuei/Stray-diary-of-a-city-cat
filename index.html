@@ -1,85 +1,206 @@
-<!DOCTYPE html>
-<html lang="zh-Hant">
+<!DOCTYPE html> <!-- 宣告文件類型為 HTML5 -->
+<html lang="zh-Hant"> <!-- 設定文件語言為繁體中文 -->
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=390, initial-scale=1.0" />
-  <title>城市貓の流浪日記</title>
-  <link href="https://fonts.googleapis.com/css2?family=Zen+Antique&display=swap" rel="stylesheet" />
+  <meta charset="UTF-8" /> <!-- 設定字元編碼為 UTF-8 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <!-- 設定視窗寬度為 390，初始縮放比例為 1 -->
+  <title>城市貓の流浪日記</title> <!-- 頁面標題 -->
   <style>
+    * {/* 自設字體細明體 */
+    font-family: 'SimSun', serif;
+    font-weight: bold;
+    } 
     * {
-      margin: 0;
-      padding: 0;
-      font-family: 'Zen Antique', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'SimSun', serif;
+    font-weight: bold;
+    }
+    html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden; /* 防止 body 被滾動 */
     }
     input {
-      background: transparent;
-      border: none;
-      outline: none;
-      font-size: 14px;
-      text-align: center;
-      width: 178px;
-      height: 40px;
+      background: transparent; /* 輸入框背景透明 */
+      border: none; /* 無邊框 */
+      outline: none; /* 聚焦時無外框 */
+      font-size: 14px; /* 字型大小14px */
+      text-align: center; /* 文字置中 */
+      width: 178px; /* 寬度178px */
+      height: 40px; /* 高度40px */
+    }
+    #name-input {
+    color: #FFFFFF; /* 輸入文字的顏色 */
+    }
+    #name-input::placeholder {
+    color: #FFFFFF; /* placeholder 的顏色 */
+    opacity: 1; /* 某些瀏覽器預設有透明度，這裡設為不透明 */
     }
     #check-btn {
-      position: absolute;
-      left: 272px;
-      top: 754px;
-      width: 40px;
-      height: 40px;
-      border-radius: 9999px;
-      background: #D9D9D9;
-      border: none;
-      font-size: 24px;
-      cursor: not-allowed;
-      opacity: 0.5;
+      position: absolute; /* 絕對定位 */
+      left: 340px; /* 左側距離240px */
+      top: 825px; /* 頂部距離825px */
+      width: 40px; /* 寬40px */
+      height: 40px; /* 高40px */
+      border-radius: 9999px; /* 讓按鈕圓形 */
+      background: #D9D9D9; /* 背景灰色 */
+      border: none; /* 無邊框 */
+      font-size: 24px; /* 字型大小24px */
+      cursor: not-allowed; /* 游標顯示不可點擊 */
+      opacity: 0.5; /* 半透明 */
     }
     #check-btn.enabled {
+      cursor: pointer; /* 游標顯示可點擊 */
+      opacity: 1; /* 不透明 */
+    }
+
+    @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+    }
+    #terms-trigger {
+      position: absolute;
+      top: 760px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 14px;
+      color: #FFFFFF;
       cursor: pointer;
-      opacity: 1;
+      text-decoration: none;/* 無底線 */
+      animation: blink 3.0s infinite;/* 閃爍動畫 */
+    }
+    #terms-popup {
+      display: none; /* 預設隱藏 */
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.6); /* 半透明背景 */
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;/* 置於最上層 */
+    }
+    #terms-popup .content {
+      background: white;/* 白色背景 */
+      color: black;
+      padding: 20px;
+      border-radius: 8px;
+      width: 80%;
+      max-height: 80vh; /* 限制最大高度 */
+      overflow-y: auto; /* 滾動條垂直出現 */
+      position: relative;
+      box-shadow: 0 0 10px rgba(0,0,0,0.4);
+    }
+    #close-terms {
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 20px;
+      cursor: pointer;
+      font-weight: bold;
     }
   </style>
 </head>
 <body>
-   <div style="width: 100vw; height: 100vh; position: relative; background: #2C2C2C; overflow: hidden;">
-    <div style="width: 390px; height: 844px; left: 0px; top: 0px; position: absolute; background: #2C2C2C"></div>
-    <div style="width: 292px; height: 93px; left: 49px; top: 76px; position: absolute; color: #E8E8E8; font-size: 64px; font-family: Zen Antique; font-weight: 400; word-wrap: break-word">城市猫</div>
-    <div style="width: 292px; height: 87px; left: 49px; top: 182px; position: absolute; text-align: right; color: #E8E8E8; font-size: 64px; font-family: Zen Antique; font-weight: 400; word-wrap: break-word">流浪日記</div>
-    <div style="width: 292px; height: 46px; left: 49px; top: 156px; position: absolute; text-align: center; color: #E8E8E8; font-size: 32px; font-family: Zen Antique; font-weight: 400; word-wrap: break-word">の</div>
-  
+  <!-- 主容器，背景為圖片，支援內容滾動 -->
+    <div style="width: 100vw; height: 100vh; overflow-y: auto; position: relative; background: url('2.jpg') no-repeat center center / cover;">  
+
+    <!-- <img src="1.jpg" alt="城市貓的流浪日記" style="width: 292px; height: auto; position: absolute; left: 49px; top: 182px;" /> 先將整個主題名稱隱藏-->
     
-    <!-- 名字輸入框背景 -->
-    <div style="width: 178px; height: 40px; left: 78px; top: 754px; position: absolute; background: #D9D9D9; border-radius: 40px"></div>
-    <!-- 實際的輸入框 -->
-    <input type="text" id="name-input" placeholder="請輸入名字" style="position: absolute; left: 78px; top: 754px;" />
+    <!-- 詳細閱讀條款（點擊顯示彈窗） -->
+    <div id="terms-trigger" style="cursor: pointer; color: #fff;">點擊詳細閱讀條款</div>
+    <!-- 彈窗 -->
+    <div id="terms-popup">
+      <div class="content">
+        <div id="close-terms">✕</div>
+        <h2>【測驗服務使用條款】<br/><br/></h2>
+        <p>本條款說明您在使用我們提供的測驗服務（以下簡稱「本服務」）時，應遵守的條件、規範及權利義務等，請您在使用本服務前詳細閱讀並充分理解。在您點選同意或使用本服務後，即表示您已同意遵守本條款，並願意依此進行。<br/><br/>
+        如本條款有任何變更，您同樣應注意並遵守變更後的規定，變更將在本平台公告並立即生效，請您定期查閱本服務公告。<br/><br/>
+        一、【接受條款】<br/><br/>
+        1.您在使用本服務前已充分閱讀並理解本條款內容，並同意受其約束。<br/><br/>
+        2.本服務所提供的測驗結果僅供參考，並不應視為專業診斷。測驗結果可能會隨您回答的問題而有所變化，且可能受限於測驗設計及解析範圍。<br/><br/>
+        二、【服務使用規範】<br/><br/>
+        1.使用本服務時，您需提供真實有效的資料，並確保資料的完整性與正確性。若因資料不實或失真導致的問題，本服務將不承擔任何責任。<br/><br/>
+        2.本服務中所提供的測驗結果僅為輔助工具，目的在於促進參與者的自我了解與反思，並無意識形態或價值判斷。<br/><br/>
+        三、【用戶資料與隱私保護】<br/><br/>
+        1.在您使用本服務時，您同意我們收集、處理、保存您的測驗結果及其他必要信息，以便提供更好的服務。這些資料將依照《隱私政策》進行保護，除非經您同意或符合法律規定，否則不會將您的個人資料披露給第三方。<br/><br/>
+        2.在您參與測驗過程中，可能會收集到與您的情緒反應、行為模式等相關的資料。這些資料將用於服務優化、統計分析及未來相關研究。<br/><br/>
+        3.在特定情況下，若我們進行進一步的分析或實驗，您同意我們會通過您提供的電子郵件地址與您聯繫以進行後續的測驗或資訊收集。若您不希望收到此類聯繫，請在測驗過程中或隨時向我們提出退出要求。<br/><br/>
+        四、【實驗及後續聯繫】<br/><br/>
+        1.根據您使用本服務時的測驗結果，我們可能會進行進一步的分析或相關調查。這些分析旨在了解參與者的行為及情感反應，並優化本服務的質量。<br/><br/>
+        2.如有必要，我們將通過您測驗時提供的電子郵件地址與您聯繫，進行進一步的資訊收集或提供相關回饋。<br/><br/>
+        3.您同意我們可能會基於您的測驗結果向您發送相關的調查或反饋邀請。請放心，這些措施完全根據個人需要並遵守隱私保護規定。<br/><br/>
+        4.若您不希望參與進一步的實驗或不希望收到來自我們的後續聯繫，您可以隨時聯繫客服部門，選擇退出。<br/><br/>
+        五、【責任限制】<br/><br/>
+        1.本服務對於測驗結果的準確性不作保證。測驗結果僅作為參考，不應視為決策依據或唯一指引。<br/><br/>
+        2.若您發現測驗結果或服務內容有任何問題或錯誤，請及時聯絡我們的客服部門。<br/><br/>
+        六、【使用者行為規範】<br/><br/>
+        1.您應遵守本服務的各項規定，不得利用本服務進行任何非法、欺詐、侵犯他人隱私或其他不當行為。<br/><br/>
+        2.若您違反本條款中的任何條件，將視情況而定，受到警告、限制使用或終止使用本服務的處罰。<br/><br/>
+        七、【免責聲明】<br/><br/>
+        1.本服務對於由於第三方服務提供者或其他不可抗力因素導致的服務中斷或測驗結果偏差，將不承擔任何責任。<br/><br/>
+        2.本服務保留隨時修改、更新或終止本服務的權利，且不需提前通知使用者。<br/><br/>
+        八、【爭議解決】<br/><br/>
+        1.若您對本條款或本服務有任何爭議，應先與我們的客服部門進行協商處理。<br/><br/>
+        感謝您使用本服務，並希望您的測驗體驗愉快。如果您有任何疑問，請隨時聯絡我們的客服。
+        </p> 
+      </div>
+    </div>
+
+    <!-- 輸入提示文字 -->
+    <div style="position: absolute; top: 785px; left: 50%; transform: translateX(-50%); font-size: 20px; color: #FFFFFF;">
+      請輸入名字
+    </div>
+
+    <!-- 輸入框灰色背景 -->
+    <div style="width: 250px; height: 40px; top: 825px; left: 50%; position: absolute; background: #D9D9D9; border-radius: 40px; transform: translateX(-50%);"></div>
+
+    <!-- 實際可輸入的文字框 -->
+    <input type="text" id="name-input" placeholder="" 
+      style="position: absolute; top: 825px; left: 50%; transform: translateX(-50%); font-size: 18px; color: #000000; width: 250px; height: 40px; text-align: center; background: transparent; border: none;" />
 
     <!-- 確認按鈕 -->
-    <button id="check-btn">✓</button>
+    <button id="check-btn">✓</button> 
+    <!-- 確認按鈕，初始為不可點擊狀態 -->
   </div>
-
+<!-- JavaScript 操作邏輯 -->
   <script>
-    const nameInput = document.getElementById('name-input');
-    const checkBtn = document.getElementById('check-btn');
+    const trigger = document.getElementById('terms-trigger'); // 條款觸發元素
+    const popup = document.getElementById('terms-popup'); // 條款彈窗
+    const closeBtn = document.getElementById('close-terms'); // 關閉按鈕
 
-    // 初始設置：按鈕無效
-    checkBtn.disabled = true;
-
-    // 每當輸入變更時檢查內容
-    nameInput.addEventListener('input', () => {
-      // 若輸入框有任意字，就允許按鈕啟用
-      checkBtn.disabled = nameInput.value.trim() === '';
+     trigger.addEventListener('click', () => {
+      popup.style.display = 'flex'; // 顯示彈窗
     });
 
-    // 點擊 ✔ 按鈕後跳轉
-    checkBtn.addEventListener('click', () => {
-      if (!checkBtn.disabled) {
-        window.location.href = 'element.html'; // 替換為你需要的頁面
+    closeBtn.addEventListener('click', () => {
+      popup.style.display = 'none'; // 點✕關閉彈窗
+    });
+
+    popup.addEventListener('click', (e) => {
+      if (e.target === popup) {
+        popup.style.display = 'none'; // 點背景也可關閉彈窗
       }
     });
 
-    // 按下 Enter 鍵觸發跳轉
+    const nameInput = document.getElementById('name-input'); // 名字輸入框
+    const checkBtn = document.getElementById('check-btn'); // 確認按鈕
+
+    checkBtn.disabled = true; // 初始按鈕禁用
+
+    nameInput.addEventListener('input', () => {
+      checkBtn.disabled = nameInput.value.trim() === ''; // 有輸入才啟用按鈕
+    });
+
+    checkBtn.addEventListener('click', () => {
+      if (!checkBtn.disabled) {
+        window.location.href = 'element.html'; // 點按鈕跳轉
+      }
+    });
+
     nameInput.addEventListener('keydown', (event) => {
       if (event.key === 'Enter' && !checkBtn.disabled) {
-        window.location.href = 'element.html'; // 替換為你需要的頁面
+        window.location.href = 'element.html'; // 按 Enter 跳轉
       }
     });
   </script>
