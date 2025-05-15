@@ -1,65 +1,62 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="zh-Hant"> <!-- 設定語言為繁體中文 -->
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>城市貓の流浪日記</title>
+  <meta charset="UTF-8" /> <!-- 設定網頁編碼為 UTF-8 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <!-- 設定響應式設計與禁止縮放，適用於手機裝置 -->
+  <title>城市貓の流浪日記</title> <!-- 設定網頁標題 -->
 
-  <!-- 引入 Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Zen+Antique&display=swap" rel="stylesheet">
   <style>
+    /* 重置所有元素的預設邊距與內距，並設定 box-sizing 為 border-box */
+    /* 設定全域字體為細明體並加粗 */
     * {
-      margin: 0;
-      padding: 0;
-      font-family: 'Zen Antique', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'SimSun', serif;
+    font-weight: bold;
     }
 
-    body {
-      background: #2C2C2C;
-      width: 390px;
-      height: 844px;
-      overflow: hidden;
-      position: relative;
+    /* 設定 HTML 與 Body 的尺寸滿版，並防止捲動 */
+    html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden; /* 防止 body 被滾動 */
     }
 
-    .next-page {
-      left: 119px;
-      top: 806px;
-      position: absolute;
+    /* 設定提示文字樣式 */
+    .text {
+      position: fixed;               /* 固定在畫面上，不會隨滾動而改變 */
+      bottom: 50px;                  /* 與畫面底部距離 50px */
+      left: 50%;
+      transform: translateX(-50%);   /* 使元素水平置中 */
       text-align: center;
       color: #FFFEFE;
       font-size: 12px;
-      font-weight: 400;
       letter-spacing: 5px;
-      word-wrap: break-word;
-      cursor: pointer;
+      animation: fadeIn 1s ease-in-out;
+      z-index: 1;                    /* 確保在背景影片之上 */
     }
   </style>
-  <script>
-  function goToNextPage() {
-    window.location.href = "test3.html";
-  }
-</script>
 </head>
 <body>
-  <div data-layer="題目1選項" class="1" style="width: 390px; height: 844px; position: relative; background: white; overflow: hidden">
-    <div data-layer="Rectangle0" class="Rectangle0" style="width: 390px; height: 844px; left: 0px; top: 0px; position: absolute; background: #2C2C2C"></div>
-    <div data-layer="你剛找到一個廢棄報紙堆疊出的紙箱窩，靠著它過了兩晚，總算不再半夜被雨淋醒。但今天，一隻比你壯碩的大橘猫站在入口，尾巴甩個不停，喉嚨裡發出低沉的咕嚕聲。牠盯著你，一步步逼近。" style="width: 296px; height: 300px; left: 47px; top: 77px; position: absolute; text-align: justify; color: #FFFEFE; font-size: 13px; line-height: 20px; letter-spacing: 1.30px; word-wrap: break-word">你剛找到一個廢棄報紙堆疊出的紙箱窩，靠著它過了兩晚，總算不再半夜被雨淋醒。但今天，一隻比你壯碩的大橘猫站在入口，尾巴甩個不停，喉嚨裡發出低沉的咕嚕聲。牠盯著你，一步步逼近。</div>
-    
-    <div data-layer="Rectangle 1" class="Rectangle1" style="width: 300px; height: 25px; left: 46px; top: 750px; position: absolute; background: #D9D9D9; border-radius: 25px; cursor: pointer;" onclick="goToNextPage()"></div>
-    <div data-layer="推開橘貓，占據整個紙箱" style="left: 125px; top: 753px; position: absolute; text-align: center; color: black; font-size: 13px;">推開橘貓，占據整個紙箱</div>
+  <body onclick="goNext()">
+  <!-- 背景圖片：自動寬度適應手機，長度等比例縮放 -->
+    <img src="0.jpg" style="width: 100vw; height: auto; display: block;" />
 
-    <div data-layer="Rectangle 2" class="Rectangle2" style="width: 300px; height: 25px; left: 46px; top: 716px; position: absolute; background: #D9D9D9; border-radius: 25px; cursor: pointer;" onclick="goToNextPage()"></div>
-    <div data-layer="低聲嗚咽，慢慢靠近牠，希望獲取牠的同情" style="left: 73px; top: 719px; position: absolute; text-align: center; color: black; font-size: 13px;">低聲嗚咽，慢慢靠近牠，希望獲取牠的同情</div>
+    <!-- 題目描述文字，置中顯示 -->
+    <div style="width: 320px; height: auto; left: 50%; top: 75px; transform: translateX(-50%); position: absolute; text-align: justify; color: #FFFEFE; font-size: 13px; line-height: 24px; letter-spacing: 1.50px; word-wrap: break-word">
+      這時巷口忽然傳來一陣狂奔聲。牠們圍著你打轉、吠叫，甚至想咬你的尾巴。你心跳加速，全身緊繃。
+    </div>
 
-    <div data-layer="Rectangle 3" class="Rectangle3" style="width: 300px; height: 25px; left: 46px; top: 681px; position: absolute; background: #D9D9D9; border-radius: 25px; cursor: pointer;" onclick="goToNextPage()"></div>
-    <div data-layer="垂下耳朵，小心退後，轉身離開找別的棲身之地" style="left: 60px; top: 684px; position: absolute; text-align: center; color: black; font-size: 13px;">垂下耳朵，小心退後，轉身離開找別的棲身之地</div>
-
-    <div data-layer="Rectangle 4" class="Rectangle4" style="width: 300px; height: 25px; left: 46px; top: 647px; position: absolute; background: #D9D9D9; border-radius: 25px; cursor: pointer;" onclick="goToNextPage()"></div>"
-    <div data-layer="豎起毛髮、拱起背，發出威嚇聲，準備開戰" style="width: 285px; height: 28px; left: 54px; top: 648px; position: absolute; text-align: center; color: black; 
-    font-size: 13px;">豎起毛髮、拱起背，發出威嚇聲，準備開戰</div>
-
-    <div data-layer="→" style="left: 30px; top: 30px; position: absolute; transform: rotate(-180deg); text-align: justify; color: white; font-size: 30px;">→</div>
+    <div class="text">點擊進入下一個頁面</div> <!-- 提示文字 -->
   </div>
+
+    <script>
+    // 當使用者點擊畫面時，導向 test2_1.html
+    function goNext() {
+      window.location.href = 'test2_1.html'; // 導向 test2.html 頁面
+    }
+  </script>
 </body>
 </html>
