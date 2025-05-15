@@ -28,55 +28,41 @@
 
 </head>
 <body>
+  <body onclick="goNext()">
   <!-- 背景圖片：自動寬度適應手機，長度等比例縮放 -->
     <img src="0.jpg" style="width: 100vw; height: auto; display: block;" />
 
-    <div style="left: 30px; top: 30px; position: absolute; transform: rotate(-180deg); text-align: justify; color: white; font-size: 30px; cursor: pointer;" onclick="window.location.href='test2_1.html'">→</div>
+    <div style="left: 30px; top: 30px; position: absolute; transform: rotate(-180deg); text-align: justify; color: white; font-size: 30px; cursor: pointer;" onclick="window.location.href='test11_1.html'">→</div>
 
     <!-- 題目描述文字，置中顯示 -->
     <div style="width: 320px; height: auto; left: 50%; top: 75px; transform: translateX(-50%); position: absolute; text-align: justify; color: #FFFEFE; font-size: 13px; line-height: 24px; letter-spacing: 1.50px; word-wrap: break-word">
-      你終於躲過了的追捕後，藏身在在垃圾桶旁邊，忽然聞到一陣香味，是一塊香噴噴的雞腿！！當你準備靠近時，角落傳來一些東動靜，好像有什麽東西在那裡。
+      你發現某戶人家窗台總放著精緻貓碗，裡頭有新鮮鮭魚塊。當你躍上窗檯，玻璃後的小女孩興奮貼近，她的手掌「啪」一聲拍在窗上。
     </div>
     
     <!-- 群組：選項按鈕 + 文字 -->
     <div style="width: 300px; height: 25px; left: 50%; bottom: 170px; transform: translateX(-50%); position: absolute; cursor: pointer;" onclick="goToNextPage()">
       <div style="width: 100%; height: 100%; background: #D9D9D9; border-radius: 25px;"></div>
-      <div style="width: 100%; height: 100%; position: absolute; top: 0; left: 0; display: flex; align-items: center; justify-content: center; color: black; font-size: 13px;">馬上轉身離開，食物再香也不能冒險</div>
+      <div style="width: 100%; height: 100%; position: absolute; top: 0; left: 0; display: flex; align-items: center; justify-content: center; color: black; font-size: 13px;">嚇得撞翻貓碗，魚塊撒了一地也要逃</div>
     </div>
 
     <div style="width: 300px; height: 25px; left: 50%; bottom: 130px; transform: translateX(-50%); position: absolute; cursor: pointer;" onclick="goToNextPage()">
       <div style="width: 100%; height: 100%; background: #D9D9D9; border-radius: 25px;"></div>
-      <div style="width: 100%; height: 100%; position: absolute; top: 0; left: 0; display: flex; align-items: center; justify-content: center; color: black; font-size: 13px;">躡手躡腳靠近，快速叼起雞腿準備逃跑</div>
+      <div style="width: 100%; height: 100%; position: absolute; top: 0; left: 0; display: flex; align-items: center; justify-content: center; color: black; font-size: 13px;">強忍驚嚇緩慢後退，眼睛死盯食物</div>
     </div>
 
     <div style="width: 300px; height: 25px; left: 50%; bottom: 90px; transform: translateX(-50%); position: absolute; cursor: pointer;" onclick="goToNextPage()">
       <div style="width: 100%; height: 100%; background: #D9D9D9; border-radius: 25px;"></div>
-      <div style="width: 100%; height: 100%; position: absolute; top: 0; left: 0; display: flex; align-items: center; justify-content: center; color: black; font-size: 13px;">坐在原地觀察幾分鐘，看是否有其他危險出現</div>
+      <div style="width: 100%; height: 100%; position: absolute; top: 0; left: 0; display: flex; align-items: center; justify-content: center; color: black; font-size: 13px;">在窗邊靜靜盯著她，等待她離開後再慢慢靠近</div>
     </div>
 
     <div style="width: 300px; height: 25px; left: 50%; bottom: 50px; transform: translateX(-50%); position: absolute; cursor: pointer;" onclick="goToNextPage()">
       <div style="width: 100%; height: 100%; background: #D9D9D9; border-radius: 25px;"></div>
-      <div style="width: 100%; height: 100%; position: absolute; top: 0; left: 0; display: flex; align-items: center; justify-content: center; color: black; font-size: 13px;">直接走過去吃雞腿</div>
+      <div style="width: 100%; height: 100%; position: absolute; top: 0; left: 0; display: flex; align-items: center; justify-content: center; color: black; font-size: 13px;">靜靜坐下，等她冷靜後再慢慢接近食物</div>
     </div>
   </div>
     <script>
-    function addScores(types, value) {
-      // 取得原本的分數資料（如果還沒建立，就創一個空物件）
-      const scoreData = JSON.parse(localStorage.getItem('score')) || {};
-
-      // 對每個類型加上分數
-      types.forEach(type => {
-        if (!scoreData[type]) {
-          scoreData[type] = 0; // 如果還沒有這個類型，就初始化為 0
-        }
-        scoreData[type] += value; // 加上指定的分數
-      });
-
-      // 儲存更新後的分數
-      localStorage.setItem('score', JSON.stringify(scoreData));
-
-      // 跳轉到下一頁（你可以換成你要的下一頁網址）
-      window.location.href = "test4.html";
+    function goToNextPage() {
+      window.location.href = "test13.html";
     }
     </script>
 </body>

@@ -24,6 +24,24 @@
     overflow: hidden; /* 防止 body 被滾動 */
     }
 
+    /* 設定影片為背景並鋪滿畫面 */
+    video.background-video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover; /* 保持比例填滿，裁切多餘部分 */
+      z-index: -1; /* 確保影片在最底層 */
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
+    }
+
     /* 設定提示文字樣式 */
     .text {
       position: fixed;               /* 固定在畫面上，不會隨滾動而改變 */
@@ -37,26 +55,31 @@
       animation: fadeIn 1s ease-in-out;
       z-index: 1;                    /* 確保在背景影片之上 */
     }
+
   </style>
 </head>
-<body>
-  <body onclick="goNext()">
-  <!-- 背景圖片：自動寬度適應手機，長度等比例縮放 -->
-    <img src="0.jpg" style="width: 100vw; height: auto; display: block;" />
+<body onclick="goNext()">
+ <!-- 當使用者點擊畫面，執行 goNext 函式 -->
+ <!-- 背景影片：播放完凍結最後一幀 -->
+  <video id="bgVideo" class="background-video" autoplay muted playsinline>
+    <source src="0.mp4" type="video/mp4">
+    您的瀏覽器不支援 HTML5 影片。
+  </video>
 
-    <!-- 題目描述文字，置中顯示 -->
-    <div style="width: 320px; height: auto; left: 50%; top: 75px; transform: translateX(-50%); position: absolute; text-align: justify; color: #FFFEFE; font-size: 13px; line-height: 24px; letter-spacing: 1.50px; word-wrap: break-word">
-      你誤闖了一個固定貓群的聚集地，牠們並不歡迎你，有幾隻開始向你發出低鳴。
-    </div>
+  <div class="text">點擊進入下一個頁面</div> <!-- 提示文字 -->
 
-    <div class="text">點擊進入下一個頁面</div> <!-- 提示文字 -->
-  </div>
-
-    <script>
-    // 當使用者點擊畫面時，導向 test7_1.html
+  <script>
+    // 當使用者點擊畫面時，導向 test15_1.html
     function goNext() {
-      window.location.href = 'test7_1.html'; // 導向 test7.html 頁面
+      window.location.href = 'test15_1.html'; // 導向 test1.html 頁面
     }
+
+    // 讓影片在播放結束後凍結最後畫面
+    const video = document.getElementById('bgVideo');
+    video.addEventListener('ended', () => {
+      video.pause();                      // 停止影片（其實已經停止）
+      video.currentTime = video.duration; // 設定畫面停留在最後一幀
+    });
   </script>
 </body>
 </html>

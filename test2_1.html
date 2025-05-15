@@ -28,7 +28,6 @@
 
 </head>
 <body>
-  <body onclick="goNext()">
   <!-- 背景圖片：自動寬度適應手機，長度等比例縮放 -->
     <img src="0.jpg" style="width: 100vw; height: auto; display: block;" />
 
@@ -40,28 +39,43 @@
     </div>
     
     <!-- 群組：選項按鈕 + 文字 -->
-    <div style="width: 300px; height: 25px; left: 50%; bottom: 170px; transform: translateX(-50%); position: absolute; cursor: pointer;" onclick="goToNextPage()">
+    <div style="width: 300px; height: 25px; left: 50%; bottom: 170px; transform: translateX(-50%); position: absolute; cursor: pointer;" onclick="addScores(['Relationship bullying', 'Verbal bullying'], 1)">
       <div style="width: 100%; height: 100%; background: #D9D9D9; border-radius: 25px;"></div>
       <div style="width: 100%; height: 100%; position: absolute; top: 0; left: 0; display: flex; align-items: center; justify-content: center; color: black; font-size: 13px;">跳上水管，冷眼看牠們離開</div>
     </div>
 
-    <div style="width: 300px; height: 25px; left: 50%; bottom: 130px; transform: translateX(-50%); position: absolute; cursor: pointer;" onclick="goToNextPage()">
+    <div style="width: 300px; height: 25px; left: 50%; bottom: 130px; transform: translateX(-50%); position: absolute; cursor: pointer;" onclick="addScores(['Physical bullying', 'Sexual bullying'], 1)">
       <div style="width: 100%; height: 100%; background: #D9D9D9; border-radius: 25px;"></div>
       <div style="width: 100%; height: 100%; position: absolute; top: 0; left: 0; display: flex; align-items: center; justify-content: center; color: black; font-size: 13px;">拔腿狂奔，只求離開這條街</div>
     </div>
 
-    <div style="width: 300px; height: 25px; left: 50%; bottom: 90px; transform: translateX(-50%); position: absolute; cursor: pointer;" onclick="goToNextPage()">
+    <div style="width: 300px; height: 25px; left: 50%; bottom: 90px; transform: translateX(-50%); position: absolute; cursor: pointer;" onclick="addScores(['Cyber bullying', 'Counterattacking bullying'], 1)">
       <div style="width: 100%; height: 100%; background: #D9D9D9; border-radius: 25px;"></div>
       <div style="width: 100%; height: 100%; position: absolute; top: 0; left: 0; display: flex; align-items: center; justify-content: center; color: black; font-size: 13px;">定住身體，企圖讓牠們對你失去興趣</div>
     </div>
 
-    <div style="width: 300px; height: 25px; left: 50%; bottom: 50px; transform: translateX(-50%); position: absolute; cursor: pointer;" onclick="goToNextPage()">
+    <div style="width: 300px; height: 25px; left: 50%; bottom: 50px; transform: translateX(-50%); position: absolute; cursor: pointer;" onclick="addScores(['Normal'], 1)">
       <div style="width: 100%; height: 100%; background: #D9D9D9; border-radius: 25px;"></div>
       <div style="width: 100%; height: 100%; position: absolute; top: 0; left: 0; display: flex; align-items: center; justify-content: center; color: black; font-size: 13px;">冷靜退後尋找安全地點</div>
     </div>
-  </div>
+
     <script>
-    function goToNextPage() {
+    function addScores(types, value) {
+      // 取得原本的分數資料（如果還沒建立，就創一個空物件）
+      const scoreData = JSON.parse(localStorage.getItem('score')) || {};
+
+      // 對每個類型加上分數
+      types.forEach(type => {
+        if (!scoreData[type]) {
+          scoreData[type] = 0; // 如果還沒有這個類型，就初始化為 0
+        }
+        scoreData[type] += value; // 加上指定的分數
+      });
+
+      // 儲存更新後的分數
+      localStorage.setItem('score', JSON.stringify(scoreData));
+
+      // 跳轉到下一頁（你可以換成你要的下一頁網址）
       window.location.href = "test3.html";
     }
     </script>
