@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>測驗分數除錯頁</title>
+  <style>
+    body {
+      font-family: 'SimSun', serif;
+      padding: 20px;
+      background-color: #f8f8f8;
+      color: #333;
+    }
+    h1 {
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+    pre {
+      background: #eee;
+      padding: 10px;
+      border-radius: 5px;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+    button {
+      padding: 8px 15px;
+      font-size: 14px;
+      margin-right: 10px;
+      margin-top: 10px;
+      cursor: pointer;
+      border: none;
+      border-radius: 5px;
+      background-color: #444;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <h1>🌟 測驗分數除錯工具</h1>
+  <button onclick="showScores()">查看目前分數</button>
+  <button onclick="resetScores()">清除所有分數</button>
+  <pre id="output">點上面按鈕查看內容...</pre>
+
+  <script>
+    function showScores() {
+      const data = localStorage.getItem('score');
+      const output = document.getElementById('output');
+      if (data) {
+        const parsed = JSON.parse(data);
+        output.textContent = JSON.stringify(parsed, null, 2);
+      } else {
+        output.textContent = '⚠️ 尚未記錄任何分數。';
+      }
+    }
+
+    function resetScores() {
+      localStorage.removeItem('score');
+      document.getElementById('output').textContent = '✅ 已清除所有分數資料。';
+    }
+  </script>
+</body>
+</html>
