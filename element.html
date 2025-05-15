@@ -1,51 +1,85 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="zh-Hant"> <!-- 設定語言為繁體中文 -->
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>城市貓の流浪日記</title>
-  <link href="https://fonts.googleapis.com/css2?family=Zen+Antique&display=swap" rel="stylesheet" />
+  <meta charset="UTF-8" /> <!-- 設定網頁編碼為 UTF-8 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <!-- 設定響應式設計與禁止縮放，適用於手機裝置 -->
+  <title>城市貓の流浪日記</title> <!-- 設定網頁標題 -->
+
   <style>
+    /* 重置所有元素的預設邊距與內距，並設定 box-sizing 為 border-box */
+    /* 設定全域字體為細明體並加粗 */
     * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Zen Antique', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'SimSun', serif;
+    font-weight: bold;
+    }
+
+    /* 設定 HTML 與 Body 的尺寸滿版，並防止捲動 */
+    html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden; /* 防止 body 被滾動 */
+    }
+
+    /* 設定影片為背景並鋪滿畫面 */
+    video.background-video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover; /* 保持比例填滿，裁切多餘部分 */
+      z-index: -1; /* 確保影片在最底層 */
     }
 
     body {
-      background: #2C2C2C;
-      width: 100vw;
-      height: 100vh;
-      overflow: hidden;
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
       align-items: center;
     }
 
+    /* 設定提示文字樣式 */
     .text {
-      margin-bottom: 20px;
+      position: fixed;               /* 固定在畫面上，不會隨滾動而改變 */
+      bottom: 50px;                  /* 與畫面底部距離 50px */
+      left: 50%;
+      transform: translateX(-50%);   /* 使元素水平置中 */
       text-align: center;
       color: #FFFEFE;
       font-size: 12px;
       letter-spacing: 5px;
       animation: fadeIn 1s ease-in-out;
+      z-index: 1;                    /* 確保在背景影片之上 */
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: scale(1.05); }
-      to { opacity: 1; transform: scale(1); }
-    }
   </style>
 </head>
 <body onclick="goNext()">
-  <div class="text">點擊進入下一個頁面</div>
+ <!-- 當使用者點擊畫面，執行 goNext 函式 -->
+ <!-- 背景影片：播放完凍結最後一幀 -->
+  <video id="bgVideo" class="background-video" autoplay muted playsinline>
+    <source src="0.mp4" type="video/mp4">
+    您的瀏覽器不支援 HTML5 影片。
+  </video>
+
+  <div class="text">點擊進入下一個頁面</div> <!-- 提示文字 -->
 
   <script>
+    // 當使用者點擊畫面時，導向 test1.html
     function goNext() {
-      window.location.href = 'test1.html';
+      window.location.href = 'test1.html'; // 導向 test1.html 頁面
     }
+
+    // 讓影片在播放結束後凍結最後畫面
+    const video = document.getElementById('bgVideo');
+    video.addEventListener('ended', () => {
+      video.pause();                      // 停止影片（其實已經停止）
+      video.currentTime = video.duration; // 設定畫面停留在最後一幀
+    });
   </script>
 </body>
 </html>
