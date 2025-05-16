@@ -25,23 +25,16 @@
       color: white;
       display: flex;
       justify-content: center;
-      align-items: center;
+      align-items: flex-end; /* 🆕 將按鈕置於下方 */
       text-align: center;
       padding: 30px;
     }
 
-    .result-box {
-      max-width: 320px;
-    }
-
-    .title {
-      font-size: 20px;
-      margin-bottom: 20px;
-    }
-
-    .description {
-      font-size: 15px;
-      line-height: 1.8;
+    body {
+      background-color: black;
+      background-size: cover;/* 🆕 確保背景圖正常顯示 */
+      background-position: center;
+      background-repeat: no-repeat;
     }
 
     .reset-btn {
@@ -53,15 +46,12 @@
       border-radius: 5px;
       font-weight: bold;
       cursor: pointer;
+      z-index: 10;
     }
   </style>
 </head>
 <body>
-  <div class="result-box">
-    <div class="title">你的城市貓人格是：</div>
-    <div id="resultText" class="description">讀取中...</div>
-    <button class="reset-btn" onclick="resetTest()">重新測驗</button>
-  </div>
+  <button class="reset-btn" onclick="resetTest()">重新測驗</button>
 
   <script>
       const score = JSON.parse(localStorage.getItem('score')) || {};
@@ -88,17 +78,20 @@
           "Normal": 0
         };
 
-        const resultDescriptions = {
-          "Counterattacking bullying": "😿 你是孟加拉貓：表面堅強，但每當遭遇挑戰時，內心的脆弱便隱約可見。為了保護自己，你選擇用攻擊來掩蓋所有的不安。",
-          "Verbal bullying": "😿 你是布偶貓：你天生溫柔，卻也因此不知如何拒絕他人的要求。總是默默承擔，卻害怕自己無法滿足每一個人。",
-          "Physical bullying": "😿 你是橘貓：你總是帶著笑臉迎接每個人，但心底的那份不安，卻總是隱隱浮現。你懷疑自己是否做錯了什麼，是否真的足夠好。",
-          "Cyber bullying": "😿 你是英國短毛貓：不必再將痛苦隱藏在微笑後，偶爾讓自己的聲音響起，向他人訴說，總有那麼一位能為你分擔。",
-          "Sexual bullying": "😿 你是斯芬克斯貓：孤獨成了你的習慣，反而比人群更讓你感到自在。但你深知，所有的防備，其實都是對過往傷痛的保護。",
-          "Relationship bullying": "😿 你是波斯貓：不必為了不成為焦點而自我封閉，真正的友情，來自於真誠，而非為他人換取微笑。",
-          "Normal": "😿 你是人類寶寶：你不需要急著成長、不用懂得所有情緒。只要在安全的地方，繼續觀察、感受、依靠，讓自己用自己的節奏慢慢展開。"
+        const resultBackgrounds = {
+          "Counterattacking bullying": "01.jpg",
+          "Verbal bullying": "02.jpg",
+          "Physical bullying": "03.jpg",
+          "Cyber bullying": "04.jpg",
+          "Sexual bullying": "05.jpg",
+          "Relationship bullying": "06.jpg",
+          "Normal": "07.jpg"
         };
 
-        document.getElementById("resultText").innerText = resultDescriptions[highestType] || "尚未完成測驗，請重新開始。";
+        const backgroundImg = resultBackgrounds[highestType];
+        if (backgroundImg) {
+          document.body.style.backgroundImage = `url('${backgroundImg}')`;
+        }
 
         function submitToGoogleForm() {
         // 如果之前送出過就不再送出
@@ -106,7 +99,7 @@
           console.log("已送出過，跳過提交。");
           return;
         }
-        
+
         const formData = new FormData();
         formData.append("entry.676996804", email);          // Email 欄位
         formData.append("entry.1150981508", highestType);   // 人格結果欄位
