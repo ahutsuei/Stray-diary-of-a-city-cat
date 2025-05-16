@@ -24,44 +24,42 @@
     overflow: hidden; /* 防止 body 被滾動 */
     }
 
-    input {
-      background: transparent; /* 輸入框背景透明 */
-      border: none; /* 無邊框 */
-      outline: none; /* 聚焦時無外框 */
-      font-size: 14px; /* 字型大小14px */
-      text-align: center; /* 文字置中 */
-      width: 178px; /* 寬度178px */
-      height: 40px; /* 高度40px */
-    }
+    /* 輸入框 */
     #name-input {
-    color: #FFFFFF; /* 輸入文字的顏色 */
-    }
-    #name-input::placeholder {
-    color: #FFFFFF; /* placeholder 的顏色 */
-    opacity: 1; /* 某些瀏覽器預設有透明度，這裡設為不透明 */
-    }
-    #check-btn {
-      position: absolute; /* 絕對定位 */
-      right: 30px; /* 右側距離30px */
-      bottom: 50px; /* 底部距離50px */
-      width: 40px; /* 寬40px */
-      height: 40px; /* 高40px */
-      border-radius: 9999px; /* 讓按鈕圓形 */
-      background: #D9D9D9; /* 背景灰色 */
-      border: none; /* 無邊框 */
-      font-size: 24px; /* 字型大小24px */
-      cursor: not-allowed; /* 游標顯示不可點擊 */
-      opacity: 0.5; /* 半透明 */
-    }
-    #check-btn.enabled {
-      cursor: pointer; /* 游標顯示可點擊 */
-      opacity: 1; /* 不透明 */
+      background: transparent;
+      border: none;
+      outline: none;
+      font-size: 18px;
+      text-align: center;
+      width: 150px;
+      height: 40px;
+      color: #000000;
     }
 
-    @keyframes blink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0; }
+    /* placeholder 顏色 */
+    #name-input::placeholder {
+      color: #FFFFFF;
+      opacity: 1;
     }
+
+    /* 確認按鈕 */
+    #check-btn {
+      margin-left: 10px;
+      width: 40px;
+      height: 40px;
+      border-radius: 9999px;
+      background: #D9D9D9;
+      border: none;
+      font-size: 24px;
+      cursor: not-allowed;
+      opacity: 0.5;
+    }
+
+    #check-btn.enabled {
+      cursor: pointer;
+      opacity: 1;
+    }
+
     #terms-trigger {
       position: absolute;
       bottom: 25px;
@@ -69,9 +67,9 @@
       transform: translateX(-50%);
       font-size: 12px;
       letter-spacing: 5px;
-      color: #FFFFFF;
-      cursor: pointer;
       text-decoration: none;/* 無底線 */
+      color: #fff;
+      cursor: pointer;
     }
     #terms-popup {
       display: none; /* 預設隱藏 */
@@ -86,13 +84,17 @@
       background: white;/* 白色背景 */
       color: black;
       padding: 20px;
-      border-radius: 8px;
+      border-radius: 16px;
       width: 80%;
       max-height: 80vh; /* 限制最大高度 */
       overflow-y: auto; /* 滾動條垂直出現 */
       position: relative;
       box-shadow: 0 0 10px rgba(0,0,0,0.4);
+      font-size: 14px;
+      background-color: #ffffff;
+      color: #4b0082;
     }
+
     #close-terms {
       position: absolute;
       top: 8px;
@@ -101,6 +103,72 @@
       cursor: pointer;
       font-weight: bold;
     }
+
+    .input-wrapper {
+      position: absolute;
+      bottom: 50px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      background: #D9D9D9;
+      border-radius: 40px;
+      padding: 0 10px;
+      height: 40px;
+    }
+
+      #display-name {
+      position: absolute;
+      bottom: 100px; /* 高於 input-wrapper 的 bottom: 50px */
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 20px;
+      color: #FFFFFF;
+      text-align: center;
+    }
+
+    /* 自訂彈窗樣式 */
+    #custom-alert {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+    }
+
+    .alert-overlay {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+    }
+
+    .alert-box {
+      position: relative;
+      background: #fff;
+      color: #4b0082;
+      padding: 20px 30px;
+      border-radius: 25px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      z-index: 2001;
+      max-width: 300px;
+      height: 50px; /* 可自訂高度 */
+      font-size: 13px; /* 彈窗內文字整體大小 */
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      flex-direction: column; /* 讓段落和按鈕垂直排列 */
+    }
+
+    .alert-box p {
+      font-size: 16px;
+      margin-bottom: 15px;
+      margin: 0; /* 移除預設外距以利精準置中 */
+    }
+
+
   </style>
 </head>
 <body>
@@ -110,7 +178,7 @@
     <!-- <img src="1.jpg" alt="城市貓的流浪日記" style="width: 292px; height: auto; position: absolute; left: 49px; top: 182px;" /> 先將整個主題名稱隱藏-->
     
     <!-- 詳細閱讀條款（點擊顯示彈窗） -->
-    <div id="terms-trigger" style="cursor: pointer; color: #fff;">點擊詳細閱讀條款</div>
+    <div id="terms-trigger" style="cursor: pointer; color: #fff;">點擊閱讀使用條款</div>
     <!-- 彈窗 -->
     <div id="terms-popup">
       <div class="content">
@@ -146,65 +214,125 @@
         1.若您對本條款或本服務有任何爭議，應先與我們的客服部門進行協商處理。<br/><br/>
         感謝您使用本服務，並希望您的測驗體驗愉快。如果您有任何疑問，請隨時聯絡我們的客服。
         </p> 
+        <button id="agree-btn" disabled
+        style="margin: 20px auto 0 auto; display: block; padding: 10px 20px; cursor: not-allowed; opacity: 0.5; border-radius: 20px; font-size: 13px; border: none; outline: none;background-color: #d3cce3; color: #4b0082;">已閱讀並同意此使用條款</button>
       </div>
     </div>
 
     <!-- 輸入提示文字 -->
     <div style="position: absolute; bottom: 110px; left: 50%; transform: translateX(-50%); font-size: 20px; color: #FFFFFF;">
-      請輸入名字
+    請輸入名字
+  </div>
+
+    <!-- 輸入區塊：input + button -->
+    <div class="input-wrapper">
+      <input type="text" id="name-input" placeholder="" />
+      <button id="check-btn">✓</button>
     </div>
 
-    <!-- 輸入框灰色背景 -->
-    <div style="width: 250px; height: 40px; bottom: 50px; left: 50%; position: absolute; background: #D9D9D9; border-radius: 40px; transform: translateX(-50%);"></div>
+    <!-- 自訂警告彈窗 -->
+    <div id="custom-alert">
+      <div class="alert-overlay"></div>
+      <div class="alert-box">
+        <p id="alert-message">這是一個警告訊息</p>
+      </div>
+    </div>
 
-    <!-- 實際可輸入的文字框 -->
-    <input type="text" id="name-input" placeholder="" 
-      style="position: absolute; bottom: 50px; left: 50%; transform: translateX(-50%); font-size: 18px; color: #000000; width: 250px; height: 40px; text-align: center; background: transparent; border: none;" />
-
-    <!-- 確認按鈕 -->
-    <button id="check-btn">✓</button> 
-    <!-- 確認按鈕，初始為不可點擊狀態 -->
-  </div>
 <!-- JavaScript 操作邏輯 -->
   <script>
-    const trigger = document.getElementById('terms-trigger'); // 條款觸發元素
-    const popup = document.getElementById('terms-popup'); // 條款彈窗
-    const closeBtn = document.getElementById('close-terms'); // 關閉按鈕
+    const trigger = document.getElementById('terms-trigger');
+    const popup = document.getElementById('terms-popup');
+    const closeBtn = document.getElementById('close-terms');
+    const content = document.querySelector('#terms-popup .content');
+    const agreeBtn = document.getElementById('agree-btn');
+    const nameInput = document.getElementById('name-input');
+    const checkBtn = document.getElementById('check-btn');
+    const displayName = document.getElementById('display-name');
 
-     trigger.addEventListener('click', () => {
-      popup.style.display = 'flex'; // 顯示彈窗
+    let hasScrolledToBottom = false;
+    let hasAgreed = false;
+
+    // 開啟彈窗
+    trigger.addEventListener('click', () => {
+      popup.style.display = 'flex';
     });
 
+    // 點擊關閉按鈕 => 只有同意後才可關閉
     closeBtn.addEventListener('click', () => {
-      popup.style.display = 'none'; // 點✕關閉彈窗
-    });
-
-    popup.addEventListener('click', (e) => {
-      if (e.target === popup) {
-        popup.style.display = 'none'; // 點背景也可關閉彈窗
+      if (hasAgreed) {
+        popup.style.display = 'none';
+      } else {
+        showAlert("請閱讀完整條款並點擊我同意");
       }
     });
 
-    const nameInput = document.getElementById('name-input'); // 名字輸入框
-    const checkBtn = document.getElementById('check-btn'); // 確認按鈕
+    // 點擊背景區域 => 只有同意後才可關閉
+    popup.addEventListener('click', (e) => {
+      if (e.target === popup && hasAgreed) {
+        popup.style.display = 'none';
+      } else if (e.target === popup) {
+        showAlert("請閱讀完整條款並點擊我同意");
+      }
+    });
 
-    checkBtn.disabled = true; // 初始按鈕禁用
+    // 滾動到最底部才啟用同意按鈕
+    content.addEventListener('scroll', () => {
+      const atBottom = content.scrollTop + content.clientHeight >= content.scrollHeight - 10;
+      if (atBottom && !hasScrolledToBottom) {
+        hasScrolledToBottom = true;
+        agreeBtn.disabled = false;
+        agreeBtn.style.cursor = 'pointer';
+        agreeBtn.style.opacity = '1';
+      }
+    });
 
-    nameInput.addEventListener('input', () => {
-      checkBtn.disabled = nameInput.value.trim() === ''; // 有輸入才啟用按鈕
+    // 同意按鈕邏輯
+    agreeBtn.addEventListener('click', () => {
+      if (!agreeBtn.disabled) {
+        hasAgreed = true;
+        popup.style.display = 'none';
+      }
+    });
+
+    // 使用者輸入名字後更新按鈕與顯示文字
+      nameInput.addEventListener('input', () => {
+      const hasValue = nameInput.value.trim() !== '';
+      checkBtn.disabled = !hasValue;
+      checkBtn.classList.toggle('enabled', hasValue);
     });
 
     checkBtn.addEventListener('click', () => {
       if (!checkBtn.disabled) {
-        window.location.href = 'element.html'; // 點按鈕跳轉
+        if (hasAgreed) {
+          window.location.href = 'element.html';
+        } else {
+          showAlert("請先閱讀並同意使用條款");
+        }
       }
     });
 
     nameInput.addEventListener('keydown', (event) => {
       if (event.key === 'Enter' && !checkBtn.disabled) {
-        window.location.href = 'element.html'; // 按 Enter 跳轉
+        if (hasAgreed) {
+          window.location.href = 'element.html';
+        } else {
+          showAlert("請先閱讀並同意使用條款");
+        }
       }
     });
+
+    // 自訂警告彈窗（無按鈕，自動關閉）
+    function showAlert(message, duration = 1000) {
+      const alertBox = document.getElementById('custom-alert');
+      const alertMessage = document.getElementById('alert-message');
+      alertMessage.textContent = message;
+      alertBox.style.display = 'flex';
+
+      setTimeout(() => {
+        alertBox.style.display = 'none';
+      }, duration); // 預設 2.5 秒後自動關閉
+    }
+
   </script>
 </body>
 </html>
