@@ -48,7 +48,7 @@
       width: 40px;
       height: 40px;
       border-radius: 9999px;
-      background: #D9D9D9;
+      background: transparent;
       border: none;
       font-size: 24px;
       cursor: not-allowed;
@@ -82,7 +82,6 @@
     }
     #terms-popup .content {
       background: white;/* 白色背景 */
-      color: black;
       padding: 20px;
       border-radius: 16px;
       width: 80%;
@@ -91,7 +90,6 @@
       position: relative;
       box-shadow: 0 0 10px rgba(0,0,0,0.4);
       font-size: 14px;
-      background-color: #ffffff;
       color: #4b0082;
     }
 
@@ -111,10 +109,12 @@
       transform: translateX(-50%);
       display: flex;
       align-items: center;
-      background: #D9D9D9;
-      border-radius: 40px;
-      padding: 0 10px;
-      height: 40px;
+      justify-content: center;
+      width: 250px;  /* 根據需要調整 */
+      height: 50px;  /* 根據需要調整 */
+      background: url('button.png') no-repeat center center;
+      background-size: 100% 100%;  /* ⭐ 不裁切，強制變形 */
+      border: none;
     }
 
       #display-name {
@@ -145,16 +145,16 @@
 
     .alert-box {
       position: relative;
-      background: #fff;
-      color: #4b0082;
-      padding: 20px 30px;
-      border-radius: 25px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      width: 300px; /* 根據 button.png 大小可調整 */
+      height: 100px;
+      background: url('button.png') no-repeat center center;
+      background-size: 100% 100%;  /* 填滿容器，不裁切但會變形 */
+      border: none;
       z-index: 2001;
       max-width: 300px;
       height: 50px; /* 可自訂高度 */
       font-size: 13px; /* 彈窗內文字整體大小 */
-
+      color: #4b0082;
       display: flex;
       justify-content: center;
       align-items: center;

@@ -64,19 +64,19 @@
   </div>
 
   <script>
-    window.onload = function() {
-      try {
-        const score = JSON.parse(localStorage.getItem('score')) || {};
+      const score = JSON.parse(localStorage.getItem('score')) || {};
+      const email = localStorage.getItem("userEmail") || "";
+      const alreadySubmitted = localStorage.getItem("formSubmitted");
 
-        const typeMap = {
-          Q1: "Verbal bullying",
-          Q2: "Physical bullying",
-          Q3: "Cyber bullying",
-          Q4: "Sexual bullying",
-          Q5: "Relationship bullying",
-          Q6: "Counterattacking bullying",
-          Q7: "Normal"
-        };
+      let highestType = '';
+      let highestValue = -1;
+
+      for (let type in score) {
+        if (score[type] > highestValue) {
+          highestValue = score[type];
+          highestType = type;
+        }
+      }
 
         const totalScores = {
           "Counterattacking bullying": 0,
@@ -88,23 +88,6 @@
           "Normal": 0
         };
 
-        for (let key in score) {
-          const mapped = typeMap[key];
-          if (mapped) {
-            totalScores[mapped] += score[key];
-          }
-        }
-
-        let highestType = '';
-        let highestValue = -1;
-
-        for (let type in totalScores) {
-          if (totalScores[type] > highestValue) {
-            highestValue = totalScores[type];
-            highestType = type;
-          }
-        }
-
         const resultDescriptions = {
           "Counterattacking bullying": "😿 你是孟加拉貓：表面堅強，但每當遭遇挑戰時，內心的脆弱便隱約可見。為了保護自己，你選擇用攻擊來掩蓋所有的不安。",
           "Verbal bullying": "😿 你是布偶貓：你天生溫柔，卻也因此不知如何拒絕他人的要求。總是默默承擔，卻害怕自己無法滿足每一個人。",
@@ -115,19 +98,45 @@
           "Normal": "😿 你是人類寶寶：你不需要急著成長、不用懂得所有情緒。只要在安全的地方，繼續觀察、感受、依靠，讓自己用自己的節奏慢慢展開。"
         };
 
-        const result = resultDescriptions[highestType] || "尚未完成測驗，請重新開始。";
-        document.getElementById("resultText").innerText = result;
+        document.getElementById("resultText").innerText = resultDescriptions[highestType] || "尚未完成測驗，請重新開始。";
 
-      } catch (error) {
-        document.getElementById("resultText").innerText = "讀取結果時發生錯誤，請重新測驗。";
-        console.error("錯誤：", error);
-      }
-    };
+        function submitToGoogleForm() {
+        // 如果之前送出過就不再送出
+        if (alreadySubmitted === "true") {
+          console.log("已送出過，跳過提交。");
+          return;
+        }
+        
+        const formData = new FormData();
+        formData.append("entry.676996804", email);          // Email 欄位
+        formData.append("entry.1150981508", highestType);   // 人格結果欄位
+        formData.append("entry.1222422724", JSON.stringify(score)); // 分數 JSON
 
-    function resetTest() {
-      localStorage.clear();
-      window.location.href = "index.html";
+        fetch("https://docs.google.com/forms/d/e/1FAIpQLSfmFi-4acie9JsQ3BTqAhsH5QS2s2kOWHUnyfpAPAn_K-B-UQ/formResponse", {
+          method: "POST",
+          mode: "no-cors",
+          body: formData
+        })
+        .then(() => {
+        console.log("送出成功（no-cors 無法回傳實際狀態）");
+        localStorage.setItem("formSubmitted", "true");
+      })
+        .catch((err) => {
+        console.error("送出失敗", err);
+        localStorage.removeItem("formSubmitted"); // 失敗時允許重試
+      });
     }
-  </script>
+
+      submitToGoogleForm();
+
+      function resetTest() {
+        localStorage.clear();
+        window.location.href = "index.html"; // 改成你的第一頁路徑
+      }
+    </script>
+
+    <!-- 加上隱藏的 iframe -->
+    <iframe name="hiddenIframe" style="display: none;"></iframe>
+
 </body>
 </html>

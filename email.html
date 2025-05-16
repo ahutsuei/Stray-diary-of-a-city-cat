@@ -44,16 +44,14 @@
       left: 50%; /* 基準點為螢幕中央 */
       bottom: 150px; /* 距離頂部 754px */
       transform: translateX(-50%); /* 向左移動自身一半寬度以達到置中 */
-      width: 40px; /* 按鈕寬度 */
+      width: 150px; /* 按鈕寬度 */
       height: 40px; /* 按鈕高度 */
-      background: #D9D9D9; /* 背景顏色 */
-      border-radius: 50%; /* 圓形按鈕 */
+      background: url('button.png') no-repeat center center;
+      background-size: 100% 100%;  /* 填滿容器，不裁切但會變形 */
       cursor: pointer; /* 滑鼠變為可點擊圖示 */
       text-align: center; /* 文字置中 */
       line-height: 40px; /* 使文字垂直置中 */
-      font-size: 24px; /* 字體大小為 24px */
-      font-family: 'Dela Gothic One', sans-serif; /* 使用指定字體 */
-      font-weight: 400; /* 字重為正常 */
+      font-size: 20px; /* 字體大小為 20px */
     }
 
     .title {
@@ -72,46 +70,39 @@
     <img src="0.jpg" style="width: 100vw; height: auto; display: block;" />
     
     <input type="email" id="emailInput" class="email-input" placeholder="請輸入..." />
-    <!-- 信箱輸入欄，placeholder 顯示提示文字 -->
-
-    <div class="confirm-button" onclick="handleConfirm()">✓</div>
-    <!-- 確認按鈕，點擊後觸發 handleConfirm() 函式 -->
-
+    <div class="confirm-button" onclick="submitEmail()">確認</div>
     <div class="title">輸入你的信箱</div>
-    <!-- 顯示標題文字 -->
-  
+
+    <!-- 隱藏的 Google 表單 -->
+    <form id="hiddenForm" action="https://docs.google.com/forms/d/e/1FAIpQLSfmFi-4acie9JsQ3BTqAhsH5QS2s2kOWHUnyfpAPAn_K-B-UQ/formResponse" method="POST" target="hiddenIframe" style="display: none;">
+      <input name="entry.676996804" id="hiddenEmailInput" type="email" />
+    </form>
+    <iframe name="hiddenIframe" style="display: none;"></iframe>
+
+    <script>
+      function submitEmail() {
+        const email = document.getElementById("emailInput").value.trim();
+        if (!email) {
+          alert("請輸入信箱！");
+          return;
+        }
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+          alert("請輸入有效的 Email！");
+          return;
+        }
+
+        document.getElementById("hiddenEmailInput").value = email;
+        document.getElementById("hiddenForm").submit();
+
+        localStorage.setItem("userEmail", email); // 存入localStorage
+
+        // 1 秒後跳轉，避免還沒送出就離開
+        setTimeout(() => {
+          window.location.href = "result.html";
+        }, 1000);
+      }
+    </script>
+
 </body>
-
-<script>
-  function handleConfirm() {
-  const email = document.getElementById("emailInput").value.trim();
-
-  if (email === "") {
-    alert("請輸入信箱！");
-    return;
-  }
-
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-  if (!emailRegex.test(email)) {
-    alert("請輸入有效的 Email！");
-    return;
-  }
-
-  // 背景送出，不等結果
-  fetch("https://script.google.com/macros/s/AKfycbyUa2Db216lkvowX8cVZN9YERu3SXdnlX8U7oOrQ3-z94F61NpEN2RPeqFTpGF36pWD/exec", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-    body: "email=" + encodeURIComponent(email),
-  }).catch(error => {
-    console.error("傳送錯誤：", error);
-  });
-
-  // 馬上跳轉
-  window.location.href = "result.html";
-  }
-
-</script>
 </html>

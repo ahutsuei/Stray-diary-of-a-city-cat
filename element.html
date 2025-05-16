@@ -24,6 +24,13 @@
     overflow: hidden; /* 防止 body 被滾動 */
     }
 
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
+    }
+
     /* 設定影片為背景並鋪滿畫面 */
     video.background-video {
       position: fixed;
@@ -35,13 +42,6 @@
       z-index: -1; /* 確保影片在最底層 */
     }
 
-    body {
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      align-items: center;
-    }
-
     /* 設定提示文字樣式 */
     .text {
       position: fixed;               /* 固定在畫面上，不會隨滾動而改變 */
@@ -50,10 +50,24 @@
       transform: translateX(-50%);   /* 使元素水平置中 */
       text-align: center;
       color: #FFFEFE;
-      font-size: 12px;
+      font-size: 14px;
       letter-spacing: 5px;
       animation: fadeIn 1s ease-in-out;
       z-index: 1;                    /* 確保在背景影片之上 */
+    }
+
+    /* 黑色遮罩初始為不透明，進入後淡出 */
+    #transition-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: black;
+      opacity: 1;
+      pointer-events: none;
+      z-index: 10;
+      transition: opacity 0.8s ease;
     }
 
   </style>
@@ -67,8 +81,15 @@
   </video>
 
   <div class="text">點擊進入下一個頁面</div> <!-- 提示文字 -->
+  <div id="transition-overlay"></div> <!-- ✅ 這個是你剛剛少放的遮罩 -->
 
   <script>
+    // 頁面載入後，淡出黑色遮罩
+    window.addEventListener('load', () => {
+      const overlay = document.getElementById('transition-overlay');
+      overlay.style.opacity = '0';
+    });
+
     // 當使用者點擊畫面時，導向 test1.html
     function goNext() {
       window.location.href = 'test1.html'; // 導向 test1.html 頁面
