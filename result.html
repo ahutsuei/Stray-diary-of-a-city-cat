@@ -83,6 +83,47 @@
     z-index: 1;
   }
 
+  /* 按鈕容器，置中排列左右兩個按鈕，使用 gap 控制間距 */
+  .btn-container {
+    position: fixed;       /* 固定在頁面底部 */
+    width: 100%;           /* 撐滿整個寬度 */
+    display: flex;         /* 使用彈性盒子 */
+    justify-content: center; /* 置中對齊所有按鈕 */
+    gap: 10px;             /* 按鈕之間間距 */
+    padding: 0 20px;       /* 左右內邊距 */
+    box-sizing: border-box;
+    z-index: 10;           /* 置於頂層 */
+  }
+
+  /* 上方兩個按鈕（重新測驗和分享測驗）底部距離90px */
+  .btn-top {
+    bottom: 90px;
+  }
+
+  /* 下方兩個按鈕（圖鑒和官網）底部距離30px */
+  .btn-bottom {
+    bottom: 30px;
+  }
+
+  /* 按鈕樣式調整，取消絕對定位，寬度固定，方便排列 */
+  .custom-btn-wrapper {
+    position: relative !important; /* 取消原本絕對定位 */
+    left: auto !important;         /* 取消水平置中transform */
+    transform: none !important;
+    width: 150px;                  /* 按鈕固定寬度 */
+    height: 50px;
+    cursor: pointer;
+  }
+
+  /* 按鈕樣式調整 */
+  .custom-btn-wrapper {
+    position: relative !important;
+    left: auto !important;
+    transform: none !important;
+    width: 150px;
+    height: 50px;
+    cursor: pointer;
+  }
   </style>
 </head>
 <body>
@@ -101,27 +142,30 @@
   </div>
 
   <!-- 重新測驗 -->
-  <div class="custom-btn-wrapper" style="bottom: 150px; display: none;" id="btn-reset" onclick="resetTest()">
-    <img src="button.png" class="custom-btn-bg" />
-    <div class="custom-btn-text">重新測驗</div>
-  </div>
-
   <!-- 分享測驗 -->
-  <div class="custom-btn-wrapper" style="bottom: 90px; display: none;" id="btn-share" onclick="shareTest()">
-    <img src="button.png" class="custom-btn-bg" />
-    <div class="custom-btn-text">分享測驗</div>
+  <div class="btn-container btn-top">
+    <div class="custom-btn-wrapper" id="btn-reset" style="display:none;" onclick="resetTest()">
+      <img src="button.png" class="custom-btn-bg" />
+      <div class="custom-btn-text">重新測驗</div>
+    </div>
+    <div class="custom-btn-wrapper" id="btn-share" style="display:none;" onclick="shareTest()">
+      <img src="button.png" class="custom-btn-bg" />
+      <div class="custom-btn-text">分享測驗</div>
+    </div>
   </div>
 
   <!-- 官網 -->
-  <div class="custom-btn-wrapper" style="bottom: 30px; display: none;" id="btn-site" onclick="window.open('https://www.instagram.com/diary_of_a_stray_cat?igsh=MWFxcmZ1MGFjMW5rMQ==')">
-    <img src="button.png" class="custom-btn-bg" />
-    <div class="custom-btn-text">官網</div>
-  </div>
-
   <!-- 圖鑒 -->
-  <div class="custom-btn-wrapper" style="bottom: -30px; display: none;" id="btn-book" onclick="window.open('https://你的圖鑒網址.com', '_blank')">
-    <img src="button.png" class="custom-btn-bg" />
-    <div class="custom-btn-text">圖鑒</div>
+  <div class="btn-container btn-bottom">
+    <div class="custom-btn-wrapper" id="btn-book" style="display:none;" onclick="window.open('https://你的圖鑒網址.com', '_blank')">
+      <img src="button.png" class="custom-btn-bg" />
+      <div class="custom-btn-text">圖鑒</div>
+    </div>
+    <div class="custom-btn-wrapper" id="btn-site" style="display:none;" onclick="window.open('https://www.instagram.com/diary_of_a_stray_cat?igsh=MWFxcmZ1MGFjMW5rMQ==')">
+      <img src="button.png" class="custom-btn-bg" />
+      <div class="custom-btn-text">官網</div>
+    </div>
+  </div>
 
   <script>
       const score = JSON.parse(localStorage.getItem('score')) || {};
@@ -217,7 +261,7 @@
         localStorage.clear();
         window.location.href = "index.html"; // 改成你的第一頁路徑
       }
-      
+
       function shareTest() {
       const shareData = {
         title: '城市貓の流浪日記',
@@ -228,9 +272,29 @@
       if (navigator.share) {
         navigator.share(shareData).catch(err => console.error('分享失敗:', err));
       } else {
-        alert("你的瀏覽器不支援 Web Share API。");
+        // 顯示自訂分享彈窗（包含下載與複製）
+        document.getElementById('share-overlay').style.display = 'block';
+        document.getElementById('share-popup').style.display = 'block';
       }
     }
+
+    function copyLink() {
+      const url = window.location.origin + '/index.html';
+      navigator.clipboard.writeText(url)
+        .then(() => alert("連結已複製到剪貼簿！"))
+        .catch(() => alert("複製失敗，請手動複製。"));
+    }
+
+    function downloadResultImage() {
+      const backgroundImg = resultBackgrounds[highestType];
+      const link = document.createElement('a');
+      link.href = backgroundImg;
+      link.download = '城市貓的流浪日記.jpg';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
     </script>
 
     <!-- 加上隱藏的 iframe -->

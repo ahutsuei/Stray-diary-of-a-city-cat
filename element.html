@@ -72,31 +72,48 @@
 
   </style>
 </head>
-<body onclick="goNext()">
  <!-- 當使用者點擊畫面，執行 goNext 函式 -->
  <!-- 背景影片：播放完凍結最後一幀 -->
-  <video id="bgVideo" class="background-video" autoplay muted playsinline>
+ <body onclick="startVideo()">
+  <video id="bgVideo" class="background-video" playsinline>
     <source src="0.mp4" type="video/mp4">
-    您的瀏覽器不支援 HTML5 影片。
   </video>
 
   <div class="text">點擊進入下一個頁面</div> <!-- 提示文字 -->
   <div id="transition-overlay"></div> <!-- ✅ 這個是你剛剛少放的遮罩 -->
 
   <script>
+    const video = document.getElementById('bgVideo');
+    const overlay = document.getElementById('transition-overlay');
+
     // 頁面載入後，淡出黑色遮罩
     window.addEventListener('load', () => {
       const overlay = document.getElementById('transition-overlay');
       overlay.style.opacity = '0';
     });
 
-    // 當使用者點擊畫面時，導向 test1.html
-    function goNext() {
-      window.location.href = 'test1.html'; // 導向 test1.html 頁面
+    function startVideo() {
+      // 移除 onclick 防止多次點擊
+      document.body.onclick = null;
+
+      // 啟用聲音
+      video.muted = false;
+
+      video.play().then(() => {
+        console.log("影片開始播放");
+
+        // 可選：播放後 40 秒導向 test1.html
+        setTimeout(() => {
+          window.location.href = 'test1.html';
+        }, 40000);
+
+      }).catch((err) => {
+        console.warn("影片播放失敗，可能因瀏覽器限制：", err);
+        alert("影片播放失敗，請重新載入或改用其他瀏覽器");
+      });
     }
 
     // 讓影片在播放結束後凍結最後畫面
-    const video = document.getElementById('bgVideo');
     video.addEventListener('ended', () => {
       video.pause();                      // 停止影片（其實已經停止）
       video.currentTime = video.duration; // 設定畫面停留在最後一幀
