@@ -40,19 +40,24 @@
     }
 
     .confirm-button {
-      position: absolute; /* 絕對定位 */
-      left: 50%; /* 基準點為螢幕中央 */
-      bottom: 150px; /* 距離頂部 754px */
-      transform: translateX(-50%); /* 向左移動自身一半寬度以達到置中 */
-      width: 150px; /* 按鈕寬度 */
-      height: 40px; /* 按鈕高度 */
+      position: absolute;
+      left: 50%;
+      bottom: 150px;
+      transform: translateX(-50%);
+      width: 150px;
+      height: 40px;
       background: url('button.png') no-repeat center center;
-      background-size: 100% 100%;  /* 填滿容器，不裁切但會變形 */
-      cursor: pointer; /* 滑鼠變為可點擊圖示 */
-      text-align: center; /* 文字置中 */
-      line-height: 40px; /* 使文字垂直置中 */
-      font-size: 20px; /* 字體大小為 20px */
+      background-size: 100% 100%;
+      cursor: pointer;
+      display: flex; /* 🆕 改成 flexbox 對齊內容 */
+      align-items: center; /* 🆕 垂直置中 */
+      justify-content: center; /* 🆕 水平置中 */
+      color: #4b0082; /* 🆕 改為靛藍色 */
+      font-size: 20px;
+      font-weight: bold;
+      text-align: center;
     }
+
 
     .title {
       position: absolute; /* 絕對定位 */
@@ -62,6 +67,47 @@
       font-size: 24px; /* 字體大小為 24px */
       color: white; /* 文字顏色為白色 */
       letter-spacing: 4.8px; /* 字距為 4.8px */
+    }
+
+    /* 自訂彈窗樣式 */
+    #custom-alert {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+    }
+
+    .alert-overlay {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+    }
+
+    .alert-box {
+      position: relative;
+      width: 300px; /* 根據 button.png 大小可調整 */
+      height: 100px;
+      background: url('button.png') no-repeat center center;
+      background-size: 100% 100%;  /* 填滿容器，不裁切但會變形 */
+      border: none;
+      z-index: 2001;
+      max-width: 300px;
+      height: 50px; /* 可自訂高度 */
+      font-size: 13px; /* 彈窗內文字整體大小 */
+      color: #4b0082;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      flex-direction: column; /* 讓段落和按鈕垂直排列 */
+    }
+
+    .alert-box p {
+      font-size: 16px;
+      margin-bottom: 15px;
+      margin: 0; /* 移除預設外距以利精準置中 */
     }
   </style>
 </head>
@@ -79,29 +125,47 @@
     </form>
     <iframe name="hiddenIframe" style="display: none;"></iframe>
 
+    <!-- 自訂警告彈窗 -->
+    <div id="custom-alert">
+      <div class="alert-overlay"></div>
+      <div class="alert-box">
+        <p id="alert-message">這是一個警告訊息</p>
+      </div>
+    </div>
+
     <script>
-      function submitEmail() {
-        const email = document.getElementById("emailInput").value.trim();
-        if (!email) {
-          alert("請輸入信箱！");
-          return;
-        }
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(email)) {
-          alert("請輸入有效的 Email！");
-          return;
-        }
+      function showCustomAlert(message) {
+      const alertBox = document.getElementById("custom-alert");
+      const alertMessage = document.getElementById("alert-message");
+      alertMessage.textContent = message;
+      alertBox.style.display = "flex";
 
-        document.getElementById("hiddenEmailInput").value = email;
-        document.getElementById("hiddenForm").submit();
+      // 自動 1 秒後關閉
+      setTimeout(() => {
+        alertBox.style.display = "none";
+      }, 1000);
+    }
 
-        localStorage.setItem("userEmail", email); // 存入localStorage
-
-        // 1 秒後跳轉，避免還沒送出就離開
-        setTimeout(() => {
-          window.location.href = "result.html";
-        }, 1000);
+    function submitEmail() {
+      const email = document.getElementById("emailInput").value.trim();
+      if (!email) {
+        showCustomAlert("請輸入信箱！");
+        return;
       }
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        showCustomAlert("請輸入有效的 Email！");
+        return;
+      }
+
+      document.getElementById("hiddenEmailInput").value = email;
+      document.getElementById("hiddenForm").submit();
+      localStorage.setItem("userEmail", email);
+
+      setTimeout(() => {
+        window.location.href = "result.html";
+      }, 1000);
+    }
     </script>
 
 </body>

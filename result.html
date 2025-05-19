@@ -6,6 +6,14 @@
   <!-- 設定響應式設計與禁止縮放，適用於手機裝置 -->
   <title>城市貓の流浪日記</title> <!-- 設定網頁標題 -->
   
+  <link rel="preload" as="image" href="01.jpg">
+  <link rel="preload" as="image" href="02.jpg">
+  <link rel="preload" as="image" href="03.jpg">
+  <link rel="preload" as="image" href="04.jpg">
+  <link rel="preload" as="image" href="05.jpg">
+  <link rel="preload" as="image" href="06.jpg">
+  <link rel="preload" as="image" href="07.jpg">
+
   <style>
     /* 重置所有元素的預設邊距與內距，並設定 box-sizing 為 border-box */
     /* 設定全域字體為細明體並加粗 */
@@ -21,37 +29,99 @@
      html, body {
       width: 100%;
       height: 100%;
-      background-color: black;
-      color: white;
-      display: flex;
-      justify-content: center;
-      align-items: flex-end; /* 🆕 將按鈕置於下方 */
-      text-align: center;
-      padding: 30px;
+      overflow: hidden;
+      position: relative;
     }
 
-    body {
-      background-color: black;
-      background-size: cover;/* 🆕 確保背景圖正常顯示 */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
+      background-attachment: fixed;
+      z-index: -1; /* 背景圖在最底層 */
+      background-color: black;
     }
 
-    .reset-btn {
-      margin-top: 30px;
-      padding: 10px 20px;
-      background-color: white;
-      color: black;
-      border: none;
-      border-radius: 5px;
-      font-weight: bold;
-      cursor: pointer;
-      z-index: 10;
-    }
+    .custom-btn-wrapper {
+    width: 350px;
+    height: 50px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    cursor: pointer;
+    z-index: 1;
+  }
+
+  .custom-btn-bg {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 25px;
+    z-index: 0;
+  }
+
+  .custom-btn-text {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: black;
+    font-size: 16px;
+    font-weight: bold;
+    z-index: 1;
+  }
+
   </style>
 </head>
 <body>
-  <button class="reset-btn" onclick="resetTest()">重新測驗</button>
+  <div id="loadingMessage" style="
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 20px;
+    color: white;
+    background-color: rgba(0,0,0,0.6);
+    padding: 20px 40px;
+    border-radius: 10px;
+    z-index: 9999;">
+    加載中...
+  </div>
+
+  <!-- 重新測驗 -->
+  <div class="custom-btn-wrapper" style="bottom: 150px; display: none;" id="btn-reset" onclick="resetTest()">
+    <img src="button.png" class="custom-btn-bg" />
+    <div class="custom-btn-text">重新測驗</div>
+  </div>
+
+  <!-- 分享測驗 -->
+  <div class="custom-btn-wrapper" style="bottom: 90px; display: none;" id="btn-share" onclick="shareTest()">
+    <img src="button.png" class="custom-btn-bg" />
+    <div class="custom-btn-text">分享測驗</div>
+  </div>
+
+  <!-- 官網 -->
+  <div class="custom-btn-wrapper" style="bottom: 30px; display: none;" id="btn-site" onclick="window.open('https://www.instagram.com/diary_of_a_stray_cat?igsh=MWFxcmZ1MGFjMW5rMQ==')">
+    <img src="button.png" class="custom-btn-bg" />
+    <div class="custom-btn-text">官網</div>
+  </div>
+
+  <!-- 圖鑒 -->
+  <div class="custom-btn-wrapper" style="bottom: -30px; display: none;" id="btn-book" onclick="window.open('https://你的圖鑒網址.com', '_blank')">
+    <img src="button.png" class="custom-btn-bg" />
+    <div class="custom-btn-text">圖鑒</div>
 
   <script>
       const score = JSON.parse(localStorage.getItem('score')) || {};
@@ -89,9 +159,30 @@
         };
 
         const backgroundImg = resultBackgrounds[highestType];
-        if (backgroundImg) {
-          document.body.style.backgroundImage = `url('${backgroundImg}')`;
-        }
+
+        setTimeout(() => {
+        const loadingMsg = document.getElementById("loadingMessage");
+        if (loadingMsg) loadingMsg.style.display = "none";
+
+        // 顯示所有按鈕
+        document.getElementById("btn-reset").style.display = "block";
+        document.getElementById("btn-share").style.display = "block";
+        document.getElementById("btn-site").style.display = "block";
+        document.getElementById("btn-book").style.display = "block";
+
+            // 載入並設定背景圖
+            if (backgroundImg) {
+              const img = new Image();
+              img.src = backgroundImg;
+              img.onload = () => {
+                // 設定背景圖片（用 ::before 層或直接 body）
+                document.styleSheets[0].insertRule(`body::before { background-image: url('${backgroundImg}'); }`, 0);
+                // 或用下面一行替代
+                // document.body.style.backgroundImage = `url('${backgroundImg}')`;
+              };
+            }
+          }, 1500); // 這邊可調整加載時間，例如 1500 毫秒
+
 
         function submitToGoogleForm() {
         // 如果之前送出過就不再送出
@@ -126,6 +217,20 @@
         localStorage.clear();
         window.location.href = "index.html"; // 改成你的第一頁路徑
       }
+      
+      function shareTest() {
+      const shareData = {
+        title: '城市貓の流浪日記',
+        text: '來看看你是哪種類型的城市貓吧！',
+        url: window.location.origin + '/index.html'
+      };
+
+      if (navigator.share) {
+        navigator.share(shareData).catch(err => console.error('分享失敗:', err));
+      } else {
+        alert("你的瀏覽器不支援 Web Share API。");
+      }
+    }
     </script>
 
     <!-- 加上隱藏的 iframe -->
