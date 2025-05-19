@@ -25,11 +25,11 @@
     font-weight: bold;
     }
 
-    /* 設定 HTML 與 Body 的尺寸滿版，並防止捲動 */
-     html, body {
+    html, body {
       width: 100%;
-      height: 100%;
-      overflow: hidden;
+      min-height: 100%;
+      overflow-x: hidden;
+      overflow-y: auto; /* 允許上下滾動 */
       position: relative;
     }
 
@@ -49,81 +49,55 @@
     }
 
     .custom-btn-wrapper {
-    width: 350px;
-    height: 50px;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    cursor: pointer;
-    z-index: 1;
-  }
+      width: 150px;
+      height: 50px;
+      cursor: pointer;
+      position: relative; /* 讓按鈕內部背景和文字絕對定位 */
+    }
 
-  .custom-btn-bg {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    border-radius: 25px;
-    z-index: 0;
-  }
+    .custom-btn-bg {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      border-radius: 25px;
+      z-index: 0;
+    }
 
-  .custom-btn-text {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: black;
-    font-size: 16px;
-    font-weight: bold;
-    z-index: 1;
-  }
+    .custom-btn-text {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: black;
+      font-size: 16px;
+      font-weight: bold;
+      z-index: 1;
+    }
 
-  /* 按鈕容器，置中排列左右兩個按鈕，使用 gap 控制間距 */
-  .btn-container {
-    position: fixed;       /* 固定在頁面底部 */
-    width: 100%;           /* 撐滿整個寬度 */
-    display: flex;         /* 使用彈性盒子 */
-    justify-content: center; /* 置中對齊所有按鈕 */
-    gap: 10px;             /* 按鈕之間間距 */
-    padding: 0 20px;       /* 左右內邊距 */
-    box-sizing: border-box;
-    z-index: 10;           /* 置於頂層 */
-  }
+    /* 按鈕容器，置中排列左右兩個按鈕，使用 gap 控制間距 */
+    .btn-container {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      /* position、bottom、left、transform 會用 inline style */
+    }
 
-  /* 上方兩個按鈕（重新測驗和分享測驗）底部距離90px */
-  .btn-top {
-    bottom: 90px;
-  }
+    /* 上方兩個按鈕（重新測驗和分享測驗）底部距離90px */
+    .btn-top {
+      bottom: 90px;
+    }
 
-  /* 下方兩個按鈕（圖鑒和官網）底部距離30px */
-  .btn-bottom {
-    bottom: 30px;
-  }
+    /* 下方兩個按鈕（圖鑒和官網）底部距離30px */
+    .btn-bottom {
+      bottom: 30px;
+    }
 
-  /* 按鈕樣式調整，取消絕對定位，寬度固定，方便排列 */
-  .custom-btn-wrapper {
-    position: relative !important; /* 取消原本絕對定位 */
-    left: auto !important;         /* 取消水平置中transform */
-    transform: none !important;
-    width: 150px;                  /* 按鈕固定寬度 */
-    height: 50px;
-    cursor: pointer;
-  }
-
-  /* 按鈕樣式調整 */
-  .custom-btn-wrapper {
-    position: relative !important;
-    left: auto !important;
-    transform: none !important;
-    width: 150px;
-    height: 50px;
-    cursor: pointer;
-  }
   </style>
 </head>
 <body>
@@ -141,31 +115,43 @@
     加載中...
   </div>
 
-  <!-- 重新測驗 -->
-  <!-- 分享測驗 -->
-  <div class="btn-container btn-top">
-    <div class="custom-btn-wrapper" id="btn-reset" style="display:none;" onclick="resetTest()">
-      <img src="button.png" class="custom-btn-bg" />
-      <div class="custom-btn-text">重新測驗</div>
+  <!-- 修改 #result-container 讓它相對定位 -->
+  <div id="result-container" style="width: 100%; display: flex; justify-content: center; position: relative;">
+    <img id="result-image" src="" style="width: 100%; height: auto; max-width: 100%;" />
+
+    <!-- 按鈕容器絕對定位 -->
+    <div class="btn-container btn-top" style="position: absolute; bottom: 90px; left: 50%; transform: translateX(-50%); width: auto; gap: 10px;">
+      <div class="custom-btn-wrapper" id="btn-reset" style="display:none;" onclick="resetTest()">
+        <img src="button2.png" class="custom-btn-bg" />
+        <div class="custom-btn-text">重新測驗</div>
+      </div>
+      <div class="custom-btn-wrapper" id="btn-share" style="display:none;" onclick="shareTest()">
+        <img src="button2.png" class="custom-btn-bg" />
+        <div class="custom-btn-text">分享測驗</div>
+      </div>
     </div>
-    <div class="custom-btn-wrapper" id="btn-share" style="display:none;" onclick="shareTest()">
-      <img src="button.png" class="custom-btn-bg" />
-      <div class="custom-btn-text">分享測驗</div>
+
+    <div class="btn-container btn-bottom" style="position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); width: auto; gap: 10px;">
+      <div class="custom-btn-wrapper" id="btn-book" style="display:none;" onclick="window.open('https://你的圖鑒網址.com', '_blank')">
+        <img src="button2.png" class="custom-btn-bg" />
+        <div class="custom-btn-text">圖鑒</div>
+      </div>
+      <div class="custom-btn-wrapper" id="btn-site" style="display:none;" onclick="window.open('https://www.instagram.com/diary_of_a_stray_cat?igsh=MWFxcmZ1MGFjMW5rMQ==')">
+        <img src="button2.png" class="custom-btn-bg" />
+        <div class="custom-btn-text">官網</div>
+      </div>
     </div>
   </div>
 
-  <!-- 官網 -->
-  <!-- 圖鑒 -->
-  <div class="btn-container btn-bottom">
-    <div class="custom-btn-wrapper" id="btn-book" style="display:none;" onclick="window.open('https://你的圖鑒網址.com', '_blank')">
-      <img src="button.png" class="custom-btn-bg" />
-      <div class="custom-btn-text">圖鑒</div>
-    </div>
-    <div class="custom-btn-wrapper" id="btn-site" style="display:none;" onclick="window.open('https://www.instagram.com/diary_of_a_stray_cat?igsh=MWFxcmZ1MGFjMW5rMQ==')">
-      <img src="button.png" class="custom-btn-bg" />
-      <div class="custom-btn-text">官網</div>
-    </div>
-  </div>
+  <!-- 隱藏的提交用表單 -->
+  <form id="googleForm" action="https://docs.google.com/forms/d/e/1FAIpQLSfmFi-4acie9JsQ3BTqAhsH5QS2s2kOWHUnyfpAPAn_K-B-UQ/formResponse" method="POST" target="hiddenIframe" style="display:none;">
+    <input name="entry.676996804" id="emailInput" type="text" />
+    <input name="entry.1150981508" id="resultInput" type="text" />
+    <input name="entry.1222422724" id="scoreInput" type="text" />
+  </form>
+
+  <!-- 隱藏 iframe 用於表單提交不跳頁 -->
+  <iframe name="hiddenIframe" style="display:none;"></iframe>
 
   <script>
       const score = JSON.parse(localStorage.getItem('score')) || {};
@@ -193,12 +179,12 @@
         };
 
         const resultBackgrounds = {
-          "Counterattacking bullying": "01.jpg",
-          "Verbal bullying": "02.jpg",
-          "Physical bullying": "03.jpg",
-          "Cyber bullying": "04.jpg",
-          "Sexual bullying": "05.jpg",
-          "Relationship bullying": "06.jpg",
+          "Counterattacking bullying": "06.jpg",
+          "Verbal bullying": "04.jpg",
+          "Physical bullying": "05.jpg",
+          "Cyber bullying": "01.jpg",
+          "Sexual bullying": "03.jpg",
+          "Relationship bullying": "02.jpg",
           "Normal": "07.jpg"
         };
 
@@ -215,16 +201,10 @@
         document.getElementById("btn-book").style.display = "block";
 
             // 載入並設定背景圖
-            if (backgroundImg) {
-              const img = new Image();
-              img.src = backgroundImg;
-              img.onload = () => {
-                // 設定背景圖片（用 ::before 層或直接 body）
-                document.styleSheets[0].insertRule(`body::before { background-image: url('${backgroundImg}'); }`, 0);
-                // 或用下面一行替代
-                // document.body.style.backgroundImage = `url('${backgroundImg}')`;
-              };
-            }
+             if (backgroundImg) {
+                const imgEl = document.getElementById("result-image");
+                imgEl.src = backgroundImg;
+              }
           }, 1500); // 這邊可調整加載時間，例如 1500 毫秒
 
 
@@ -235,25 +215,14 @@
           return;
         }
 
-        const formData = new FormData();
-        formData.append("entry.676996804", email);          // Email 欄位
-        formData.append("entry.1150981508", highestType);   // 人格結果欄位
-        formData.append("entry.1222422724", JSON.stringify(score)); // 分數 JSON
+        document.getElementById("emailInput").value = email;
+        document.getElementById("resultInput").value = highestType;
+        document.getElementById("scoreInput").value = JSON.stringify(score);
 
-        fetch("https://docs.google.com/forms/d/e/1FAIpQLSfmFi-4acie9JsQ3BTqAhsH5QS2s2kOWHUnyfpAPAn_K-B-UQ/formResponse", {
-          method: "POST",
-          mode: "no-cors",
-          body: formData
-        })
-        .then(() => {
-        console.log("送出成功（no-cors 無法回傳實際狀態）");
+        document.getElementById("googleForm").submit();
+
         localStorage.setItem("formSubmitted", "true");
-      })
-        .catch((err) => {
-        console.error("送出失敗", err);
-        localStorage.removeItem("formSubmitted"); // 失敗時允許重試
-      });
-    }
+      }
 
       submitToGoogleForm();
 
@@ -296,9 +265,6 @@
     }
 
     </script>
-
-    <!-- 加上隱藏的 iframe -->
-    <iframe name="hiddenIframe" style="display: none;"></iframe>
 
 </body>
 </html>
