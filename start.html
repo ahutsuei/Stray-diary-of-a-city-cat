@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <!-- 設定響應式視窗，防止縮放，適合手機瀏覽 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>城市貓の流浪日記</title>
+  <style>
+    /* 重置所有元素的預設邊距與內距，並設定 box-sizing 為 border-box */
+    /* 全域字體設定為細明體，並加粗 */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'SimSun', serif;
+      font-weight: bold;
+    }
+
+    /* 設定 html 和 body 滿版尺寸，並禁止滾動 */
+    /* 背景設為全黑，置中對齊內容並垂直排列 */
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden; /* 禁止滾動 */
+      background-color: black; /* 全黑背景 */
+      display: flex; /* 使用彈性盒模型置中 */
+      justify-content: center; /* 水平置中 */
+      align-items: center; /* 垂直置中 */
+      flex-direction: column; /* 項目垂直排列 */
+    }
+
+    /* 包含圖片與文字的容器，做相對定位 */
+    #btnWrapper {
+      position: relative;
+      width: 200px;
+      height: auto;
+      cursor: pointer;
+    }
+
+    /* 按鈕圖片全寬，保持比例 */
+    #btnImg {
+      width: 100%;
+      height: auto;
+      display: block;
+      user-select: none;
+      pointer-events: none;
+    }
+
+    /* 文字定位在圖片正中央 */
+    #openBtn {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: none;
+      border: none;
+      color: black;
+      font-size: 24px;
+      pointer-events: none; /* 讓點擊落在容器 */
+    }
+
+    /* 下方提示文字樣式 */
+    #exitTip {
+      margin-top: 20px;
+      color: white;
+      font-size: 14px;
+      text-align: center;
+      letter-spacing: 2px; /* 調整字距，可視需要調整數值 */
+    }
+  </style>
+</head>
+<body>
+  <div id="btnWrapper">
+    <button id="openBtn">PLAY</button>
+    <img id="btnImg" src="button2.png" alt="button" />
+  </div>
+
+  <p id="exitTip">退出瀏覽器全屏模式體驗</p>
+
+  <script>
+    // 取得文字按鈕與圖片元素
+    const btnWrapper = document.getElementById('btnWrapper');
+
+    // 開啟新視窗的函式，大小模擬手機直式螢幕 (iPhone 8)
+    function openMobileWindow() {
+      const width = 412;  // 新視窗寬度
+      const height = 915; // 新視窗高度
+      // 計算置中位置，讓新視窗出現在螢幕中央
+      const left = (window.screen.width - width) / 2;
+      const top = (window.screen.height - height) / 2;
+
+      // 新視窗參數設定
+      const features = `
+        width=${width},
+        height=${height},
+        top=${top},
+        left=${left},
+        resizable=no,  /* 不可調整大小 */
+        scrollbars=no,  /* 不顯示捲軸 */
+        toolbar=no,
+        menubar=no,
+        location=no,
+        status=no
+      `.replace(/\s/g, ''); // 移除字串中所有空白，避免錯誤
+
+      // 開啟名為「手機視窗」的新視窗，載入 index.html 頁面
+      window.open('index.html', '手機視窗', features);
+    }
+
+    btnWrapper.addEventListener('click', openMobileWindow);
+  </script>
+</body>
+</html>

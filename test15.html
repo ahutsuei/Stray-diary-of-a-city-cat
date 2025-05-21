@@ -75,7 +75,7 @@
  <!-- 背景影片：播放完凍結最後一幀 -->
  <body onclick="startVideo()">
   <video id="bgVideo" class="background-video" playsinline>
-    <source src="0.mp4" type="video/mp4">
+    <source src="1.mp4" type="video/mp4">
   </video>
 
   <div id="textPrompt" class="text">點擊開始</div>
@@ -86,45 +86,82 @@
     const overlay = document.getElementById('transition-overlay');
     const textPrompt = document.getElementById('textPrompt');
 
-    let videoFinished = false; // ✅ 狀態：影片是否播放完畢
-    
-    // 頁面載入後，淡出黑色遮罩
+    let videoFinished = false;
+    let allowJump = false;
+    let fadeOutStarted = false; // ✅ 控制是否已開始音量淡出
+
     window.addEventListener('load', () => {
-      const overlay = document.getElementById('transition-overlay');
       overlay.style.opacity = '0';
     });
 
     function startVideo() {
-      // ✅ 如果影片已經播完，再次點擊則跳轉頁面
-      if (videoFinished) {
+      if (allowJump) {
         window.location.href = 'test15_1.html';
         return;
       }
 
-      document.body.onclick = null; // ✅ 播放前禁用多次點擊
-      textPrompt.style.display = 'none'; // ✅ 隱藏初始提示「點擊開始」
+      document.body.onclick = null;
+      textPrompt.style.display = 'none';
 
-      // 啟用聲音
       video.muted = false;
 
       video.play().then(() => {
         console.log("影片開始播放");
+
+        // ✅ 顯示「點擊進入下一個頁面」的提示（30秒）
+        setTimeout(() => {
+          textPrompt.textContent = "點擊進入下一個頁面";
+          textPrompt.style.display = 'block';
+          allowJump = true;
+          document.body.onclick = startVideo;
+        }, 24000);
+
+        // ✅ 每 200ms 檢查是否該開始音量淡出
+        const fadeCheck = setInterval(() => {
+          const timeRemaining = video.duration - video.currentTime;
+
+          // ⚠️ 若剩下不到3秒且尚未開始淡出
+          if (timeRemaining <= 3 && !fadeOutStarted) {
+            fadeOutStarted = true;
+            fadeOutAudio();
+            clearInterval(fadeCheck);
+          }
+        }, 200);
       }).catch((err) => {
         console.warn("影片播放失敗：", err);
         alert("影片播放失敗，請重新載入或改用其他瀏覽器");
       });
     }
 
-    // 讓影片在播放結束後凍結最後畫面
+    // ✅ 音量淡出函式：於 3 秒內慢慢變小
+    function fadeOutAudio() {
+      const fadeDuration = 3000; // 3秒
+      const steps = 30; // 每100ms降一次
+      const interval = fadeDuration / steps;
+      const volumeStep = video.volume / steps;
+
+      let currentStep = 0;
+
+      const fadeInterval = setInterval(() => {
+        currentStep++;
+        video.volume = Math.max(0, video.volume - volumeStep);
+        if (currentStep >= steps) {
+          clearInterval(fadeInterval);
+        }
+      }, interval);
+    }
+
     video.addEventListener('ended', () => {
-      video.pause();                           // ✅ 保險停住
-      video.currentTime = video.duration;      // ✅ 定格最後一幀
+      video.pause();
+      video.currentTime = video.duration;
+      videoFinished = true;
 
-      textPrompt.textContent = "點擊進入下一個頁面"; // ✅ 修改提示內容
-      textPrompt.style.display = 'block';            // ✅ 顯示新提示
-
-      videoFinished = true; // ✅ 標記影片結束
-      document.body.onclick = startVideo; // ✅ 啟用再次點擊跳轉
+      if (!allowJump) {
+        textPrompt.textContent = "點擊進入下一個頁面";
+        textPrompt.style.display = 'block';
+        allowJump = true;
+        document.body.onclick = startVideo;
+      }
     });
   </script>
 </body>
