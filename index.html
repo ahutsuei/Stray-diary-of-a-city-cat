@@ -1,143 +1,113 @@
 <!DOCTYPE html>
-<html lang="zh-Hant"> <!-- 設定語言為繁體中文 -->
+<html lang="zh-Hant">
 <head>
-  <meta charset="UTF-8" /> <!-- 設定網頁編碼為 UTF-8 -->
+  <meta charset="UTF-8" />
+  <!-- 設定響應式視窗，防止縮放，適合手機瀏覽 -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <!-- 設定響應式設計與禁止縮放，適用於手機裝置 -->
-  <title>城市貓の流浪日記</title> <!-- 設定網頁標題 -->
-  
+  <title>城市貓の流浪日記</title>
   <style>
     /* 重置所有元素的預設邊距與內距，並設定 box-sizing 為 border-box */
-    /* 設定全域字體為細明體並加粗 */
+    /* 全域字體設定為細明體，並加粗 */
     * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'SimSun', serif;
-    font-weight: bold;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'SimSun', serif;
+      font-weight: bold;
     }
 
-    /* 設定 HTML 與 Body 的尺寸滿版，並防止捲動 */
+    /* 設定 html 和 body 滿版尺寸，並禁止滾動 */
+    /* 背景設為全黑，置中對齊內容並垂直排列 */
     html, body {
-    width: 100%;
-    height: 100%;
-    overflow: hidden; /* 防止 body 被滾動 */
+      width: 100%;
+      height: 100%;
+      overflow: hidden; /* 禁止滾動 */
+      background-color: black; /* 全黑背景 */
+      display: flex; /* 使用彈性盒模型置中 */
+      justify-content: center; /* 水平置中 */
+      align-items: center; /* 垂直置中 */
+      flex-direction: column; /* 項目垂直排列 */
     }
 
-    /* 輸入框 */
-    #name-input {
-      background: transparent;
-      border: none;
-      outline: none;
-      font-size: 18px;
-      text-align: center;
-      width: 150px;
-      height: 40px;
-      color: #000000;
-    }
-
-    /* placeholder 顏色 */
-    #name-input::placeholder {
-      color: #FFFFFF;
-      opacity: 1;
-    }
-
-    /* 確認按鈕 */
-    #check-btn {
-      margin-left: 10px;
-      width: 40px;
-      height: 40px;
-      border-radius: 9999px;
-      background: transparent;
-      border: none;
-      font-size: 24px;
-      cursor: not-allowed;
-      opacity: 0.5;
-    }
-
-    #check-btn.enabled {
+    /* 包含圖片與文字的容器，做相對定位 */
+    #btnWrapper {
+      position: relative;
+      width: 200px;
+      height: auto;
       cursor: pointer;
-      opacity: 1;
     }
 
-    .input-wrapper {
+    /* 按鈕圖片全寬，保持比例 */
+    #btnImg {
+      width: 100%;
+      height: auto;
+      display: block;
+      user-select: none;
+      pointer-events: none;
+    }
+
+    /* 文字定位在圖片正中央 */
+    #openBtn {
       position: absolute;
-      bottom: 50px;
+      top: 50%;
       left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 250px;  /* 根據需要調整 */
-      height: 50px;  /* 根據需要調整 */
-      background: url('button.png') no-repeat center center;
-      background-size: 100% 100%;  /* ⭐ 不裁切，強制變形 */
+      transform: translate(-50%, -50%);
+      background: none;
       border: none;
+      color: black;
+      font-size: 24px;
+      pointer-events: none; /* 讓點擊落在容器 */
     }
 
-      #display-name {
-      position: absolute;
-      bottom: 100px; /* 高於 input-wrapper 的 bottom: 50px */
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 20px;
-      color: #FFFFFF;
+    /* 下方提示文字樣式 */
+    #exitTip {
+      margin-top: 20px;
+      color: white;
+      font-size: 14px;
       text-align: center;
+      letter-spacing: 2px; /* 調整字距，可視需要調整數值 */
     }
-
   </style>
 </head>
 <body>
-  <!-- 主容器，背景為圖片，支援內容滾動 -->
-    <img src="2.jpg" style="width: 100vw; height: auto; display: block;" />  
-
-    <!-- 輸入提示文字 -->
-    <div style="position: absolute; bottom: 110px; left: 50%; transform: translateX(-50%); font-size: 20px; color: #FFFFFF;">
-    請輸入名字
+  <div id="btnWrapper">
+    <button id="openBtn">PLAY</button>
+    <img id="btnImg" src="button2.png" alt="button" />
   </div>
 
-    <!-- 輸入區塊：input + button -->
-    <div class="input-wrapper">
-      <input type="text" id="name-input" placeholder="" />
-      <button id="check-btn" disabled>✓</button>
-    </div>
+  <p id="exitTip">退出瀏覽器全屏模式體驗</p>
 
-<!-- JavaScript 操作邏輯 -->
   <script>
-    const nameInput = document.getElementById('name-input');
-    const checkBtn = document.getElementById('check-btn');
+    // 取得文字按鈕與圖片元素
+    const btnWrapper = document.getElementById('btnWrapper');
 
-    // 創建音效物件
-    const sound = new Audio('1.mp3');
+    // 開啟新視窗的函式，大小模擬手機直式螢幕 (iPhone 8)
+    function openMobileWindow() {
+      const width = 412;  // 新視窗寬度
+      const height = 915; // 新視窗高度
+      // 計算置中位置，讓新視窗出現在螢幕中央
+      const left = (window.screen.width - width) / 2;
+      const top = (window.screen.height - height) / 2;
 
-    // 使用者輸入名字後更新按鈕與顯示文字
-    nameInput.addEventListener('input', () => {
-      const hasValue = nameInput.value.trim().length > 0;
-      checkBtn.disabled = !hasValue;
-      checkBtn.classList.toggle('enabled', hasValue);
-    });
+      // 新視窗參數設定
+      const features = `
+        width=${width},
+        height=${height},
+        top=${top},
+        left=${left},
+        resizable=no,  /* 不可調整大小 */
+        scrollbars=no,  /* 不顯示捲軸 */
+        toolbar=no,
+        menubar=no,
+        location=no,
+        status=no
+      `.replace(/\s/g, ''); // 移除字串中所有空白，避免錯誤
 
-    function goToNextPageWithSound() {
-      sound.play(); // 播放音效
-      sound.onended = () => {
-        window.location.href = 'element.html'; // 音效播放完畢後跳轉
-      };
+      // 開啟名為「手機視窗」的新視窗，載入 index.html 頁面
+      window.open('start.html', '手機視窗', features);
     }
 
-    // 點擊確認按鈕進入下一頁
-    checkBtn.addEventListener('click', () => {
-      if (!checkBtn.disabled) {
-        goToNextPageWithSound();
-      }
-    });
-
-    // 按下 Enter 鍵也可進入下一頁
-    nameInput.addEventListener('keydown', (event) => {
-      if (event.key === 'Enter' && !checkBtn.disabled) {
-        goToNextPageWithSound();
-      }
-    });
-
+    btnWrapper.addEventListener('click', openMobileWindow);
   </script>
 </body>
 </html>
