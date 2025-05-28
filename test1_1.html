@@ -31,6 +31,8 @@
   <!-- 背景圖片：自動寬度適應手機，長度等比例縮放 -->
     <img src="1.png" style="width: 100vw; height: auto; display: block;" />
 
+    <audio id="buttonSound" src="1.mp3" preload="auto"></audio>
+    
     <div style="left: 30px; top: 30px; position: absolute; transform: rotate(-180deg); text-align: justify; color: white; font-size: 30px; cursor: pointer;" onclick="window.location.href='element.html'">→</div>
 
     <!-- 題目描述文字，置中顯示 -->
@@ -67,6 +69,12 @@
 
     <script>
     function addScores(types, value) {
+      // 播放音效
+      const audio = document.getElementById('buttonSound');
+      audio.volume = 1.0; // 最大音量
+      audio.currentTime = 0; // 每次都從頭播放
+      audio.play();
+
       // 取得原本的分數資料（如果還沒建立，就創一個空物件）
       const scoreData = JSON.parse(localStorage.getItem('score')) || {};
 
@@ -81,8 +89,10 @@
       // 儲存更新後的分數
       localStorage.setItem('score', JSON.stringify(scoreData));
 
-      // 跳轉到下一頁（你可以換成你要的下一頁網址）
-      window.location.href = "test2.html";
+      // 播放完音效後再跳轉
+      audio.onended = () => {
+        window.location.href = "test2.html";
+      };
     }
     </script>
 </body>

@@ -74,10 +74,17 @@
     <div class="text">點擊進入選項</div> <!-- 提示文字 -->
   </div>
 
-    <script>
-    // 當使用者點擊畫面時，導向 test1_1.html
+    <!-- 音效 -->
+  <audio id="clickSound" src="2.mp3" preload="auto"></audio>
+
+  <script>
     function goNext() {
-      window.location.href = 'test1_1.html'; // 導向 test2.html 頁面
+      const audio = document.getElementById('clickSound');
+      audio.volume = 1.0; // 將音量設為最大
+      audio.play(); // 播放音效
+      setTimeout(() => {
+        window.location.href = 'test1_1.html';
+      }, 300); // 延遲導頁以確保音效有播放
     }
   </script>
 </body>
