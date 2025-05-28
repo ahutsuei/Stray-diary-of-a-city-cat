@@ -110,7 +110,7 @@
 
         // ✅ 顯示「點擊進入下一個頁面」的提示（30秒）
         setTimeout(() => {
-          textPrompt.textContent = "點擊進入下一個頁面";
+          textPrompt.textContent = "點擊進入選項";
           textPrompt.style.display = 'block';
           allowJump = true;
           document.body.onclick = startVideo;
@@ -157,7 +157,7 @@
       videoFinished = true;
 
       if (!allowJump) {
-        textPrompt.textContent = "點擊進入下一個頁面";
+        textPrompt.textContent = "點擊進入下選項";
         textPrompt.style.display = 'block';
         allowJump = true;
         document.body.onclick = startVideo;

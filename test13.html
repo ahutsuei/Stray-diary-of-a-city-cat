@@ -31,11 +31,23 @@
       left: 50%;
       transform: translateX(-50%);   /* 使元素水平置中 */
       text-align: center;
-      color: black;
+      color: white;
       font-size: 14px;
       letter-spacing: 5px;
       animation: fadeIn 1s ease-in-out;
       z-index: 1;                    /* 確保在背景影片之上 */
+    }
+
+    /* 新增：黑色透明遮罩層 */
+    .overlay {
+      width: 100vw;
+      height: 100vh;
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: rgba(0, 0, 0, 0.2); /* 黑色 + 20% 透明 */
+      z-index: 0; /* 在圖片上方、文字下方 */
     }
   </style>
 </head>
@@ -44,12 +56,21 @@
   <!-- 背景圖片：自動寬度適應手機，長度等比例縮放 -->
     <img src="13.png" style="width: 100vw; height: auto; display: block;" />
 
+    <!-- 新增遮罩層 -->
+    <div class="overlay"></div>
+
     <!-- 題目描述文字，置中顯示 -->
     <div style="width: 320px; height: auto; left: 50%; top: 75px; transform: translateX(-50%); position: absolute; text-align: justify; color: #FFFEFE; font-size: 16px; line-height: 28px; letter-spacing: 1.50px; word-wrap: break-word">
       後來你回到了你的紙箱，但颱風夜狂風吹垮了你的領地，眼前兩條路：左側是散發暖光的寵物醫院，右側是幽暗但熟悉的廢棄工廠。
     </div>
 
-    <div class="text">點擊進入下一個頁面</div> <!-- 提示文字 -->
+    <!-- 進度條容器 -->
+    <div style="position: absolute; bottom: 0; left: 0; width: 100%; height: 8px; background-color: rgba(255, 255, 255, 0.2); z-index: 3;">
+      <!-- 真正的進度條（可動態改變 width 代表進度） -->
+      <div style="width: 84%; height: 100%; background-color: #FFDE59;"></div>
+    </div>
+
+    <div class="text">點擊進入選項</div> <!-- 提示文字 -->
   </div>
 
     <script>

@@ -37,6 +37,12 @@
     <div style="width: 320px; height: auto; left: 50%; top: 75px; transform: translateX(-50%); position: absolute; text-align: justify; color: #FFFEFE; font-size: 16px; line-height: 28px; letter-spacing: 1.50px; word-wrap: break-word">
       你發現某戶人家窗台總放著精緻貓碗，裡頭有新鮮鮭魚塊。當你躍上窗檯，玻璃後的小女孩興奮貼近，她的手掌「啪」一聲拍在窗上。
     </div>
+
+    <!-- 進度條容器 -->
+    <div style="position: absolute; bottom: 0; left: 0; width: 100%; height: 8px; background-color: rgba(255, 255, 255, 0.2); z-index: 3;">
+      <!-- 真正的進度條（可動態改變 width 代表進度） -->
+      <div style="width: 77%; height: 100%; background-color: #FFDE59;"></div>
+    </div>
     
     <!-- 群組：選項按鈕 + 文字 -->
     <div style="width: 350px; height: 50px; left: 50%; bottom: 230px; transform: translateX(-50%); position: absolute; cursor: pointer;" onclick="addScores(['Physical bullying', 'Verbal bullying'], 1)">

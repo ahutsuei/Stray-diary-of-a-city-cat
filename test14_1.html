@@ -37,6 +37,12 @@
     <div style="width: 320px; height: auto; left: 50%; top: 75px; transform: translateX(-50%); position: absolute; text-align: justify; color: #FFFEFE; font-size: 16px; line-height: 28px; letter-spacing: 1.50px; word-wrap: break-word">
       你遇見常搶地盤的橘貓瘸著腿流血，牠敵意的眼神中混雜著痛苦。
     </div>
+
+    <!-- 進度條容器 -->
+    <div style="position: absolute; bottom: 0; left: 0; width: 100%; height: 8px; background-color: rgba(255, 255, 255, 0.2); z-index: 3;">
+      <!-- 真正的進度條（可動態改變 width 代表進度） -->
+      <div style="width: 90%; height: 100%; background-color: #FFDE59;"></div>
+    </div>
     
     <!-- 群組：選項按鈕 + 文字 -->
     <div style="width: 350px; height: 50px; left: 50%; bottom: 230px; transform: translateX(-50%); position: absolute; cursor: pointer;" onclick="addScores(['Physical bullying', 'Verbal bullying'], 1)">

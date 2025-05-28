@@ -37,6 +37,12 @@
     <div style="width: 320px; height: auto; left: 50%; top: 75px; transform: translateX(-50%); position: absolute; text-align: justify; color: #FFFEFE; font-size: 16px; line-height: 28px; letter-spacing: 1.50px; word-wrap: break-word">
       你終於躲過了的追捕後，藏身在在垃圾桶旁邊，忽然聞到一陣香味，是一塊香噴噴的雞腿！！當你準備靠近時，角落傳來一些東動靜，好像有什麽東西在那裡。
     </div>
+
+    <!-- 進度條容器 -->
+    <div style="position: absolute; bottom: 0; left: 0; width: 100%; height: 8px; background-color: rgba(255, 255, 255, 0.2); z-index: 3;">
+      <!-- 真正的進度條（可動態改變 width 代表進度） -->
+      <div style="width: 14%; height: 100%; background-color: #FFDE59;"></div>
+    </div>
     
     <!-- 群組：選項按鈕 + 文字 -->
     <div style="width: 350px; height: 50px; left: 50%; bottom: 230px; transform: translateX(-50%); position: absolute; cursor: pointer;" onclick="addScores(['Counterattacking bullying', 'Verbal bullying'], 1)">
