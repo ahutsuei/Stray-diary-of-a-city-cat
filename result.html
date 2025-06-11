@@ -94,11 +94,23 @@
   <div id="result-container" style="width: 100%; display: flex; justify-content: center; position: relative;">
     <img id="result-image" src="" style="width: 100%; height: auto; max-width: 100%;" />
 
+    <div id="player-name" style="
+      position: absolute;
+      top: 25px;
+      left: 20px;
+      color: black;
+      font-size: 18px;
+      padding: 6px 12px;
+      border-radius: 6px;
+      z-index: 10000;
+      display: none;
+    "></div>
+
     <!-- 按鈕容器絕對定位 -->
     <div class="btn-container btn-top" style="position: absolute; bottom: 156px; left: 50%; transform: translateX(-50%); width: auto; gap: 28px;">
       <div class="custom-btn-wrapper" id="btn-reset" style="display:none;" onclick="resetTest()">
       </div>
-      <div class="custom-btn-wrapper" id="btn-book" style="display:none;" onclick="window.open('https://你的圖鑒網址.com', '_blank')">
+      <div class="custom-btn-wrapper" id="btn-book" style="display:none;" onclick="window.open('https://docs.google.com/document/d/1wEZmnZdB3pH10O0wQ79e3PFCYawvDbaS2yDOS4Yq-sA/edit?usp=sharing', '_blank')">
       </div>
     </div>
 
@@ -167,10 +179,18 @@
         document.getElementById("btn-site").style.display = "block";
         document.getElementById("btn-book").style.display = "block";
 
-            // 載入並設定背景圖
+        // 載入並設定背景圖
              if (backgroundImg) {
                 const imgEl = document.getElementById("result-image");
                 imgEl.src = backgroundImg;
+
+                // ✅ 在這裡加上顯示名稱的程式碼
+                const playerName = localStorage.getItem("playerName") || "";
+                if (playerName) {
+                  const nameBox = document.getElementById("player-name");
+                  nameBox.textContent = playerName;
+                  nameBox.style.display = "block";
+                }
               }
           }, 1500); // 這邊可調整加載時間，例如 1500 毫秒
 

@@ -118,6 +118,8 @@
     });
 
     function goToNextPageWithSound() {
+      const playerName = nameInput.value.trim();
+      localStorage.setItem("playerName", playerName); // ⭐️ 儲存名字到 localStorage
       sound.play(); // 播放音效
       sound.onended = () => {
         window.location.href = 'element.html'; // 音效播放完畢後跳轉
